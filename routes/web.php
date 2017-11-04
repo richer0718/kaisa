@@ -43,6 +43,9 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/recharge', 'ApiController@recharge');
 
 
+    Route::any('/clearCache', 'ApiController@clearCache');
+
+
 });
 
 //后台

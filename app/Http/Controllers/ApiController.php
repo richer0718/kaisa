@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Cache;
 class ApiController extends Controller
 {
 
+    public function clearCache(){
+        Cache::flush();
+        echo 'success';
+    }
 
     //获取最新开奖
     //客户端请求最新开奖信息
