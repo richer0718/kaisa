@@ -196,11 +196,11 @@ class ApiController extends Controller
         //openid
         $openid = $request -> input('openid');
         //投注选项
-        $option = $request -> input('option');
+        $option = $request -> input('btn');
         //投注点数
         $point = $request -> input('point');
         //投注期数id
-        $number = $request -> input('number');
+        $number = $request -> input('qishu');
         if($openid && $option && $point && $number){
 
         //查下此 option在不在
