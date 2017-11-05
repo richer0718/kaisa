@@ -18,7 +18,7 @@ Route::get('/test', 'Admin\TestController@index');
 Route::get('/getData', 'Admin\TestController@getData');
 
 //Api
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => 'api','middleware' => ['crosshttp']], function () {
     //注册用户
     Route::any('/regUser', 'ApiController@regUser');
     //用户登录

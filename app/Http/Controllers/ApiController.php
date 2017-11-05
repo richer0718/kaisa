@@ -368,13 +368,13 @@ class ApiController extends Controller
     //返回历史记录
     public function getHistoryData(Request $request){
         header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Credentials:true');
         //返回记录
         $data = DB::table('openprize') -> select('prize_number','open_number') -> where(function($query){
             $query -> where('open_number','!=',0);
         }) -> orderBy('id','desc') -> limit(50) -> get();
 
         return response() -> json($data);
-
     }
 
     public function getResByType($number,$type){
@@ -461,6 +461,11 @@ class ApiController extends Controller
                 return 0;
             }
         }
+    }
+
+
+    public function getUserDetail(Request $request){
+        $openid = $request -> input('openid');
     }
 
 
