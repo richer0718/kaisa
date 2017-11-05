@@ -368,7 +368,7 @@ class ApiController extends Controller
     //返回历史记录
     public function getHistoryData(Request $request){
         header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Credentials:true');
+        //header('Access-Control-Allow-Credentials:true');
         //返回记录
         $data = DB::table('openprize') -> select('prize_number','open_number') -> where(function($query){
             $query -> where('open_number','!=',0);
@@ -408,7 +408,7 @@ class ApiController extends Controller
 
     //充值
     public function recharge(Request $request){
-
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         $price = $request -> input('price');
         //看下多少钱可以买多少点
@@ -465,6 +465,7 @@ class ApiController extends Controller
 
 
     public function getUserDetail(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         $data = DB::table('buylog') -> where([
             'openid' => $openid
