@@ -4,6 +4,7 @@ namespace Illuminate\Cache;
 
 use Memcache;
 use Illuminate\Contracts\Cache\Store;
+use Carbon\Carbon;
 
 class MemcacheStore extends TaggableStore implements Store
 {
@@ -49,7 +50,10 @@ class MemcacheStore extends TaggableStore implements Store
      */
     public function get($key)
     {
+
         return $this->memcache->get($this->prefix.$key);
+
+
     }
 
     /**
@@ -85,8 +89,8 @@ class MemcacheStore extends TaggableStore implements Store
      */
     public function put($key, $value, $minutes)
     {
-        $compress = is_bool($value) || is_int($value) || is_float($value) ? false : MEMCACHE_COMPRESSED;
-        $this->memcache->set($this->prefix.$key, $value, $compress, $minutes * 60);
+        //$compress = is_bool($value) || is_int($value) || is_float($value) ? false : MEMCACHE_COMPRESSED;
+        $this->memcache->set($this->prefix.$key, $value, $this->toTimestamp($minutes));
     }
 
     /**

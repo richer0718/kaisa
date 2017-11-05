@@ -27,7 +27,7 @@ class ApiController extends Controller
         //Cache::flush();
         //先取create_time(最新一期的创建时间) prize_number(最新一期的期数) id(最新一期的id)
 
-        if( Cache::has('end_number_info') ){
+        if( Cache::get('end_number_info') ){
             $end_number_info = Cache::get('end_number_info');
 
 
@@ -65,21 +65,21 @@ class ApiController extends Controller
         $openid = $request -> input('openid');
         $open_number_id = $request -> input('open_number_id');
         //没开奖
-        if(!Cache::has('open_number_'.$open_number_id)){
+        if(!Cache::get('open_number_'.$open_number_id)){
             sleep(1);
         }
-        if(!Cache::has('open_number_'.$open_number_id)){
+        if(!Cache::get('open_number_'.$open_number_id)){
             sleep(1);
         }
-        if(!Cache::has('open_number_'.$open_number_id)){
+        if(!Cache::get('open_number_'.$open_number_id)){
             sleep(1);
         }
-        if(!Cache::has('open_number_'.$open_number_id)){
+        if(!Cache::get('open_number_'.$open_number_id)){
             echo 'timeout';
         }
 
         //先看下这期的开奖结果
-        if(Cache::has('open_number_'.$open_number_id)){
+        if(Cache::get('open_number_'.$open_number_id)){
             $temp = Cache::get('open_number_'.$open_number_id);
             $result = $temp['open_number'];
             /*
@@ -120,12 +120,14 @@ class ApiController extends Controller
     public function makeNextPrize(){
         //Cache::flush();exit;
         //生成新一期前，判断下前一期开奖了没有
-        if(Cache::has('end_number_info')){
+        if(Cache::get('end_number_info')){
+            //echo 111;exit;
             $temp = Cache::get('end_number_info');
+            //dd($temp);
             //最新一期的id
             $id = $temp['id'];
             //查找最新一次的开奖情况
-            if(!Cache::has('open_number_'.$id)){
+            if(!Cache::get('open_number_'.$id)){
                 //如果没有开奖  自动开奖
                 $this -> openPrize($id);
             }
@@ -133,16 +135,17 @@ class ApiController extends Controller
 
         //取缓存number 看生成到第几期了
         $date = date('Ymd');
-        if(Cache::has('date')){
+        if(Cache::get('date')){
             if($date != Cache::get('date')){
                 Cache::put('date',$date,1440);
             }
         }else{
             Cache::put('date',$date,1440);
         }
-
+        
         //查看今天生成的序号
-        if(Cache::has('number')){
+        if(Cache::get('number')){
+            //dd(Cache::get('number'));
             //序号加1
             $number = Cache::increment('number');
             //生成10000个 就归零
@@ -425,7 +428,7 @@ class ApiController extends Controller
 
     //通过openprize id 获取开奖记录
     public function getOpenLog($open_id){
-        if(Cache::has('open_number_'.$open_id)){
+        if(Cache::get('open_number_'.$open_id)){
             $temp = Cache::get('open_number_'.$open_id);
             return $temp;
         }else{
