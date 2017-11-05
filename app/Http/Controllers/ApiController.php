@@ -190,7 +190,7 @@ class ApiController extends Controller
         //判断下 是否停止投注
         $is_stop = Cache::get('is_stop');
         if($is_stop == 1){
-            echo 'stop';exit;
+            return response() -> json(['status'=>'stop']);
         }
         //dd($request);
         //openid
@@ -206,7 +206,7 @@ class ApiController extends Controller
         //查下此 option在不在
          $options = config('kaisa.options');
          if(!in_array($option,$options)){
-             echo 'error';
+             return response() -> json(['status'=>'error']);
          }
         //存入投注表
         DB::table('touzhu') -> insert([
@@ -216,11 +216,11 @@ class ApiController extends Controller
             'point' => $point,
             'created_at' => time()
         ]);
-        echo 'success';
+            return response() -> json(['status'=>'success']);
 
 
         }else{
-            echo 'error';
+            return response() -> json(['status'=>'error']);
         }
 
 
