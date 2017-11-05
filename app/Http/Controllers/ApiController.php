@@ -55,7 +55,7 @@ class ApiController extends Controller
 
             return response() -> json($return_arr);
         }else{
-            echo 'error';
+            return response() -> json(['status','error']);
         }
 
     }
@@ -366,13 +366,15 @@ class ApiController extends Controller
     }
 
     //返回历史记录
-    public function getHistoryData(){
+    public function getHistoryData(Request $request){
         header('Access-Control-Allow-Origin:*');
         //返回记录
         $data = DB::table('openprize') -> select('prize_number','open_number') -> where(function($query){
             $query -> where('open_number','!=',0);
         }) -> orderBy('id','desc') -> limit(50) -> get();
+
         return response() -> json($data);
+
     }
 
     public function getResByType($number,$type){
