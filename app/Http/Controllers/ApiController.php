@@ -466,6 +466,10 @@ class ApiController extends Controller
 
     public function getUserDetail(Request $request){
         $openid = $request -> input('openid');
+        $data = DB::table('buylog') -> where([
+            'openid' => $openid
+        ]) -> orderBy('id','desc') -> get();
+        return response() -> json($data);
     }
 
 
