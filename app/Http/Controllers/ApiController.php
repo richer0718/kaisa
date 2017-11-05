@@ -17,6 +17,7 @@ class ApiController extends Controller
     //获取最新开奖
     //客户端请求最新开奖信息
     public function getNewPrize($openid = 0){
+        header('Access-Control-Allow-Origin:*');
         /*
         Cache::forever('end_number_info',[
             'prize_number' => 201711040293,
