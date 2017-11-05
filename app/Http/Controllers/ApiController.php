@@ -187,6 +187,7 @@ class ApiController extends Controller
 
     //投注
     public function buyNumber(Request $request){
+        header('Access-Control-Allow-Origin:*');
         //判断下 是否停止投注
         $is_stop = Cache::get('is_stop');
         if($is_stop == 1){
@@ -402,6 +403,7 @@ class ApiController extends Controller
 
     //充值
     public function recharge(Request $request){
+
         $openid = $request -> input('openid');
         $price = $request -> input('price');
         //看下多少钱可以买多少点
