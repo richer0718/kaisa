@@ -369,7 +369,9 @@ class ApiController extends Controller
     public function getHistoryData(){
         header('Access-Control-Allow-Origin:*');
         //返回记录
-        $data = DB::table('openprize') -> select('prize_number','open_number') -> orderBy('id','desc') -> limit(50) -> get();
+        $data = DB::table('openprize') -> select('prize_number','open_number') -> where(function($query){
+            $query -> where('open_number','!=',0);
+        }) -> orderBy('id','desc') -> limit(50) -> get();
         return response() -> json($data);
     }
 

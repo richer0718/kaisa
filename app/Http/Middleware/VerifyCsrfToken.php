@@ -15,6 +15,7 @@ class VerifyCsrfToken extends BaseVerifier
         //
         '/api/buyNumber',
         '/api/getNewPrize',
+        '/api/getHistoryData',
 
     ];
 }
