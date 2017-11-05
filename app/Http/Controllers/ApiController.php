@@ -430,7 +430,7 @@ class ApiController extends Controller
         $userinfo = DB::table('user') -> where([
             'openid' => $openid
         ]) -> first();
-        echo $userinfo -> point;
+        return response() -> json(['point'=>$userinfo -> point]);
     }
 
 
