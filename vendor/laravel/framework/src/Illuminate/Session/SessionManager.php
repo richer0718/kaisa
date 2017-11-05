@@ -213,4 +213,11 @@ class SessionManager extends Manager
     {
         $this->app['config']['session.driver'] = $name;
     }
+
+
+    protected function createMemcacheDriver()
+    {
+        return $this->createCacheBased('memcache');
+    }
+
 }

@@ -10,8 +10,13 @@ class TestController extends Controller
 {
     //
     public function index(){
-        $config = config('kaisa.options');
-        dd($config);
+        if (Cache::has('key')) {
+            //
+            echo '123';
+        }
+
+        $value = Cache::get('key');
+        dd($value);
     }
 
     public function getData(){

@@ -304,4 +304,14 @@ class CacheManager implements FactoryContract
     {
         return $this->store()->$method(...$parameters);
     }
+
+    protected function createMemcacheDriver(array $config)
+    {
+        $prefix = $this->getPrefix($config);
+
+        $memcache = $this->app['memcache.connector']->connect($config['servers']);
+
+        return $this->repository(new MemcacheStore($memcache, $prefix));
+    }
+
 }
