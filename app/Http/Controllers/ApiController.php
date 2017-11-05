@@ -414,7 +414,7 @@ class ApiController extends Controller
         //看下多少钱可以买多少点
         $point = $price;
 
-        DB::table('bulog') -> insert([
+        DB::table('buylog') -> insert([
             'openid' => $openid,
             'price' => $price,
             'point' => $point,
