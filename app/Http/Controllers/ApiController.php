@@ -207,7 +207,7 @@ class ApiController extends Controller
         //查下此 option在不在
          $options = config('kaisa.options');
          if(!in_array($option,$options)){
-             return response() -> json(['status'=>'error']);
+             return response() -> json(['status'=>'super-error']);
          }
         //存入投注表
         DB::table('touzhu') -> insert([
