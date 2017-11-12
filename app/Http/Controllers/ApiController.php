@@ -525,6 +525,7 @@ class ApiController extends Controller
     public function regUser(Request $request){
         header('Access-Control-Allow-Origin:*');
         $openid = trim($request -> input('openid'));
+        $nickname = trim($request -> input('nickname'));
         $yaoqingma = trim($request -> input('code'));
         //判断必填
         if(!$openid || !$yaoqingma){
@@ -557,6 +558,7 @@ class ApiController extends Controller
         $new_yaoqing = substr(md5(microtime(true)), 0, 6);
         $res = DB::table('user') -> insert([
             'openid' => $openid,
+            'nickname' => $nickname,
             'code' => $new_yaoqing,
             'code_other' => $yaoqingma,
             'created_at' => time(),
@@ -569,8 +571,6 @@ class ApiController extends Controller
                 'code' => $new_yaoqing
             ]);
         }
-
-
     }
 
 
