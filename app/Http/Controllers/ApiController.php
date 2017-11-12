@@ -528,12 +528,31 @@ class ApiController extends Controller
         $nickname = trim($request -> input('nickname'));
         $yaoqingma = trim($request -> input('code'));
         //判断必填
-        if(!$openid || !$yaoqingma){
+        if(!$openid){
             return response() -> json([
                 'status' => 'must_error'
             ]);
         }
 
+        //查下openid不会重复把
+        $is_openid = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+        if($is_openid){
+            //如果存在返回用户id 余额
+            return response() -> json([
+                'uid' => $is_openid -> uid,
+                'point' => $is_openid -> point,
+                'code' => $is_openid -> code,
+            ]);
+        }
+
+
+        if(!$yaoqingma){
+            return response() -> json([
+                'status' => 'code_error'
+            ]);
+        }
         //先查下是否有此邀请码
         $is_code = DB::table('user') -> where([
             'code' => $yaoqingma
@@ -544,16 +563,8 @@ class ApiController extends Controller
             ]);
         }
 
-        //查下openid不会重复把
-        $is_openid = DB::table('user') -> where([
-            'openid' => $openid
-        ]) -> first();
-        if($is_openid){
-            return response() -> json([
-                'status' => 'openid_error'
-            ]);
-        }
 
+        $uid = substr(microtime(),0,6);
         //此人的邀请码
         $new_yaoqing = substr(md5(microtime(true)), 0, 6);
         $res = DB::table('user') -> insert([
@@ -561,6 +572,7 @@ class ApiController extends Controller
             'nickname' => $nickname,
             'code' => $new_yaoqing,
             'code_other' => $yaoqingma,
+            'uid' => $uid,
             'created_at' => time(),
             'updated_at' => time()
         ]);
@@ -568,10 +580,13 @@ class ApiController extends Controller
         if($res){
             return response() -> json([
                 'status' => 'success',
-                'code' => $new_yaoqing
+                'code' => $new_yaoqing,
+                'uid' => $uid
             ]);
         }
     }
+
+
 
 
 
