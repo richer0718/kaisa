@@ -232,9 +232,13 @@ class ApiController extends Controller
     //返回三位数字
     public function jisuan($open_number_id){
         //去touzhu表中查，这期的投注
-        $result = DB::table('touzhu') -> where([
-            'number' => $open_number_id
-        ]) -> get();
+        $result = DB::table('touzhu') -> where(function($query) use($open_number_id){
+            $query -> where('number','=',$open_number_id);
+            $query -> where('buy_option','!=',1);
+            $query -> where('buy_option','!=',2);
+            $query -> where('buy_option','!=',3);
+        }) -> get();
+        //dd($result);
         $options = config('kaisa.options');
         //dd($options);
         $numbers = [
@@ -248,7 +252,6 @@ class ApiController extends Controller
             7=>0,
             8=>0,
             9=>0,
-            'he'=>0
         ];
         if($result){
             foreach($result as $vo){
@@ -265,9 +268,6 @@ class ApiController extends Controller
                     foreach($option['number'] as $vol){
                         $numbers[$vol] += intval($vo -> point) * $option['peilv'];
                     }
-                }else{
-                    //合  看下合买了多少
-                    $numbers['he'] += intval($vo -> point) * $option['peilv'];
                 }
 
             }
@@ -290,7 +290,6 @@ class ApiController extends Controller
             }else{
                 //比较哪个小 就开哪个。
                 $numbers_copy = $numbers;
-                unset($numbers_copy['he']);
                 $end_number = array_search(min($numbers_copy), $numbers_copy);
                 //这边是需要出钱的，算下这边需要出多少钱
                 //$money = $numbers[$end_number];
@@ -302,17 +301,65 @@ class ApiController extends Controller
             $end_number = rand(0,9);
         }
 
-        //判断
-        if($numbers['he']){
-            //不能开合
-            unset($numbers['he']);
-            unset($numbers[$end_number]);
+        //从上边可以得出 数组场 精确场 开哪个数字发出的点数最少 $end_number
+        //然后开始比较大小场 得到十位数字
+        if($result){
+            //比较大小合买的，哪个少
+            //买大
+            $result1 = DB::table('touzhu') -> where(function($query) use($open_number_id){
+                $query -> where('number','=',$open_number_id);
+                $query -> where('buy_option','=',1);
+            }) -> sum('point');
+            //买小
+            $result2 = DB::table('touzhu') -> where(function($query) use($open_number_id){
+                $query -> where('number','=',$open_number_id);
+                $query -> where('buy_option','=',2);
+            }) -> sum('point');
+            //买合
+            $result3 = DB::table('touzhu') -> where(function($query) use($open_number_id){
+                $query -> where('number','=',$open_number_id);
+                $query -> where('buy_option','=',3);
+            }) -> sum('point');
 
-            $number_pre = array_rand($numbers,1);
+
+            //拿下每个的赔率
+            $res1 = intval($result1) * $options[1]['peilv'];
+            $res2 = intval($result1) * $options[2]['peilv'];
+            $res3 = intval($result1) * $options[3]['peilv'];
+
+            if($end_number >= 5){
+                //大数字
+                if($res1 > $res3){
+                    //大比合多 开合
+                    $number_pre =  $end_number;
+                }else{
+                    //除了end_number 都行
+                    unset($numbers[$end_number]);
+                    $number_pre = array_rand($numbers,1);
+
+                }
+            }else{
+                //小数字
+                if($res2 > $res3){
+                    //小比合多 开合
+                    $number_pre =  $end_number;
+                }else{
+                    //除了end_number 都行
+                    unset($numbers[$end_number]);
+                    $number_pre = array_rand($numbers,1);
+
+                }
+            }
+
+
         }else{
             //没有人买 就随便开
             $number_pre = rand(0,9);
         }
+
+
+
+
 
         $return_num = $number_pre.$end_number;
         //var_dump($return_num);
@@ -473,6 +520,58 @@ class ApiController extends Controller
         return response() -> json($data);
     }
 
+
+    //注册用户
+    public function regUser(Request $request){
+        header('Access-Control-Allow-Origin:*');
+        $openid = trim($request -> input('openid'));
+        $yaoqingma = trim($request -> input('code'));
+        //判断必填
+        if(!$openid || !$yaoqingma){
+            return response() -> json([
+                'status' => 'must_error'
+            ]);
+        }
+
+        //先查下是否有此邀请码
+        $is_code = DB::table('user') -> where([
+            'code' => $yaoqingma
+        ]) -> first();
+        if(!$is_code && $yaoqingma != '999999'){
+            return response() -> json([
+                'status' => 'code_error'
+            ]);
+        }
+
+        //查下openid不会重复把
+        $is_openid = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+        if($is_openid){
+            return response() -> json([
+                'status' => 'openid_error'
+            ]);
+        }
+
+        //此人的邀请码
+        $new_yaoqing = substr(md5(microtime(true)), 0, 6);
+        $res = DB::table('user') -> insert([
+            'openid' => $openid,
+            'code' => $new_yaoqing,
+            'code_other' => $yaoqingma,
+            'created_at' => time(),
+            'updated_at' => time()
+        ]);
+
+        if($res){
+            return response() -> json([
+                'status' => 'success',
+                'code' => $new_yaoqing
+            ]);
+        }
+
+
+    }
 
 
 

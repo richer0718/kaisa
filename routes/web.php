@@ -18,7 +18,7 @@ Route::get('/test', 'Admin\TestController@index');
 Route::get('/getData', 'Admin\TestController@getData');
 
 //Api
-Route::group(['prefix' => 'api','middleware' => ['crosshttp']], function () {
+Route::group(['prefix' => 'api'], function () {
     //注册用户
     Route::any('/regUser', 'ApiController@regUser');
     //用户登录
@@ -34,11 +34,13 @@ Route::group(['prefix' => 'api','middleware' => ['crosshttp']], function () {
     //充值
     Route::any('/recharge', 'ApiController@recharge');
     //计算
-    //Route::any('/jisuan/{number}', 'ApiController@jisuan');
+    Route::any('/jisuan/{number}', 'ApiController@jisuan');
     //开奖
     Route::any('/openPrize/{number}', 'ApiController@openPrize');
     //开奖历史记录
     Route::any('/getHistoryData', 'ApiController@getHistoryData');
+    //下注历史记录
+    Route::any('/buyLog', 'ApiController@getHistoryData');
     //充值(暂时)
     Route::any('/recharge', 'ApiController@recharge');
 

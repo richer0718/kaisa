@@ -18,6 +18,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/api/getHistoryData',
         '/api/getUserDetail',
         '/api/recharge',
+        '/api/regUser',
 
     ];
 }

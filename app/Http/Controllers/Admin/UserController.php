@@ -20,4 +20,9 @@ class UserController extends Controller
             'res' => $res
         ]);
     }
+
+    public function reg(){
+
+    }
+
 }
