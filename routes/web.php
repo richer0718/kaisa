@@ -43,6 +43,9 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/buyLog', 'ApiController@getHistoryData');
     //充值(暂时)
     Route::any('/recharge', 'ApiController@recharge');
+    //阿里支付请求
+    Route::any('/alipay','ApiController@payRequest');
+
 
 
     Route::any('/clearCache', 'ApiController@clearCache');

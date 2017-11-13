@@ -5,9 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Yansongda\Pay\Pay;
+
 
 class ApiController extends Controller
 {
+
+    protected $config = [
+        'alipay' => [
+            //'app_id' => '2017110909830350',
+            'app_id' => '2016081500253568',
+            'notify_url' => 'http://jhqck.com/alipay_notify.php',
+            'return_url' => 'http://jhqck.com/return.php',
+            'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApBfcEAccsXLyIYlfJBLAnZtisU94qoXfCE4owQh2WDDoFCzcO+Qzu/Ta6mEa4RGw+xvFpFKKogSM49sskrV1hf7eun12xt0/xqytq9kVpmpJq27WqjIPq3LdV+Sh4ra6taZnrh0X2pdcBspWlpqQ5YZxNXKs1TMF96C4w4CFc3jYZBLYx4shnb5cTpObKIhK4p6W4sfnZVZPJrP+qBvbzdCkkOEfnRx38k821XsHCSqAcCcZb7iuPt4nedLX/DCjtTe6BthcRpaUaGpzwUfzYuKSSiohRRgmrrq1+eRP9FXxj1d9KAFd65Uw8h4IDZXpseItnugTrG/iEETCyMv4SQIDAQAB',
+            'private_key' => 'MIIEpAIBAAKCAQEApBfcEAccsXLyIYlfJBLAnZtisU94qoXfCE4owQh2WDDoFCzcO+Qzu/Ta6mEa4RGw+xvFpFKKogSM49sskrV1hf7eun12xt0/xqytq9kVpmpJq27WqjIPq3LdV+Sh4ra6taZnrh0X2pdcBspWlpqQ5YZxNXKs1TMF96C4w4CFc3jYZBLYx4shnb5cTpObKIhK4p6W4sfnZVZPJrP+qBvbzdCkkOEfnRx38k821XsHCSqAcCcZb7iuPt4nedLX/DCjtTe6BthcRpaUaGpzwUfzYuKSSiohRRgmrrq1+eRP9FXxj1d9KAFd65Uw8h4IDZXpseItnugTrG/iEETCyMv4SQIDAQABAoIBAFmni53aNOwjEHYQV0IfWMwD3O1hrV0F3bDs+0lUdUyEFBkJ1Z6HdVipVH6gZY45G0hniRnZ21LgR5Yq5vSVXkvC0DB2YlIPCkxjhlQRPMn64pte6Lx+s58KGDNwgJ6dFfAvphA0ZxcQgcBYBu0sMCSnyuzX5eRqh0UftDNk4gUPTru8/mnfIUvnYoQakow16DenHQ1KgAxOltaxSPF+nLuO32VE6d+EywCVYuzZNa+tYaRVuo5W6zwIMdpS0cGCOl3u0rYO7TTTnFKu0bDU2iFfiImXQvwQ409ETdLIcIrqp14Ilp8FOiCxcVDMXPFCsNCb5Bs/ZI5Q05Yegl+YtYECgYEAzakTp0UL8osQKMPgkgRpf9qAr5bMxHg5hc6+IrMRFu1RkRnDtdm++MVOlmZkkYvJv0v7XGOzA96EdvMUkoS5hDN05AoCplSz0dN5W78R8lULsIQOTmQrprvOuNhCKFeBoR/vFE5gvRz6FxhuPBAMqWNsJAmbx1cM83XyUlb11vECgYEAzEIhX7Be8iNXSFfaFqQKvjVxIAZTw/9RSKbTMbWLPixRq5cObx1vrmUolM6pFT6rcxQeIkSrwASgipSfZkXppMkccxNzebvqfNDCl1XkKi0QOm0QWENsLdCmcg9SYtfajbrFOd+6HWaidv+o4MbH/KuvSsylO0Fv0OeJCTaRJtkCgYBx8zSIgaFVCegyLhXH0doClTaoE43xbguxMBP5de4KHgQLuZLOt48wl2IrwyAF5MYr0BW94x/VDP2oSpcjd5aywTALCeDd+CCKKfob84omEyke7Ixgsu/cukKX+Hrvj0yr0d3OCn9fSSbolQi/DsV1NTk93nUJxhnO65MQPE6KgQKBgQC8omYH5O4KWLEG0ntKZXy2ZMxwcudxHp2GpupsAejyJiPWf86It3qoaCuuIZztTc8wm+eoZhrnXl6VHOSIoxA/aqunatM+HVlUo8bR1DS+7pcKHib2HG4PcZ4FwDipqAbi1RXHeOJ8vIhVtY3U6D9RDYz5Wz1NGAWXu/xGUeqDIQKBgQCcAP7eVVOB8mxlP1QFejD4ds+AYAXfNTjot4124a/ZTho5OVMczECmYTCnr1hazMSFnvtz3SWVUaO6BhUZgOKbE0/hTB+0gal4IVQOaPad/bgS2QJw2ekZgJWf2hEawDQJkVQgL/n8wLl6TN2rCF1ftPKonpctQU9lWmzF6etoGw==',
+        ],
+    ];
+
 
     public function clearCache(){
         Cache::flush();
@@ -584,6 +598,19 @@ class ApiController extends Controller
                 'uid' => $uid
             ]);
         }
+    }
+
+
+    public function payRequest(){
+        $config_biz = [
+            'out_trade_no' => time(),
+            'total_amount' => '1',
+            'subject'      => 'test subject',
+        ];
+
+        $pay = new Pay($this->config);
+
+        return $pay->driver('alipay')->gateway()->pay($config_biz);
     }
 
 
