@@ -25,7 +25,8 @@ class WebGateway extends Alipay
      */
     protected function getProductCode()
     {
-        return 'FAST_INSTANT_TRADE_PAY';
+        //return 'FAST_INSTANT_TRADE_PAY';
+        return 'QUICK_MSECURITY_PAY';
     }
 
     /**
