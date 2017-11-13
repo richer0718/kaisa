@@ -46,6 +46,8 @@ Route::group(['prefix' => 'api'], function () {
     //阿里支付请求
     Route::any('/alipay','ApiController@payRequest');
 
+    Route::any('/alipay_notify','ApiController@notify');
+
 
 
     Route::any('/clearCache', 'ApiController@clearCache');
