@@ -614,7 +614,7 @@ class ApiController extends Controller
 
         $pay = new Pay($this->config);
 
-        return $pay->driver('alipay')->gateway()->pay($config_biz);
+        return $pay->driver('alipay')->gateway('app')->pay($config_biz);
     }
 
     public function notify(Request $request){
