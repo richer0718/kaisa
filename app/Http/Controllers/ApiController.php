@@ -604,6 +604,7 @@ class ApiController extends Controller
 
 
     public function payRequest(Request $request){
+        header("Content-type:text/html;charset=utf-8");
         $config_biz = [
             'out_trade_no' => time(),
             'total_amount' => '1',
