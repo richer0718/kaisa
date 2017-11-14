@@ -608,7 +608,6 @@ class ApiController extends Controller
             'out_trade_no' => time(),
             'total_amount' => '1',
             'subject'      => 'test subject',
-            'product_code' => 'QUICK_MSECURITY_PAY'
         ];
 
 
