@@ -13,7 +13,8 @@ class WebGateway extends Alipay
      */
     protected function getMethod()
     {
-        return 'alipay.trade.page.pay';
+        //return 'alipay.trade.page.pay';
+        return 'alipay.trade.app.pay';
     }
 
     /**
