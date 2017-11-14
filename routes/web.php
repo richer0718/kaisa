@@ -47,6 +47,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/alipay','ApiController@payRequest');
 
     Route::any('/alipay_notify','ApiController@notify');
+    Route::any('/return_req','ApiController@return_req');
 
 
 

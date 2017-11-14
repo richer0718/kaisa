@@ -618,8 +618,18 @@ class ApiController extends Controller
     }
 
     public function notify(Request $request){
-        file_put_contents('alipaylllog.txt',$request);
+        $pay = new Pay($this->config);
+
+        return $pay->driver('alipay')->gateway()->verify($request->all());
     }
+
+    public function return_req(Request $request){
+        $pay = new Pay($this->config);
+
+        return $pay->driver('alipay')->gateway()->verify($request->all());
+    }
+
+
 
 
 
