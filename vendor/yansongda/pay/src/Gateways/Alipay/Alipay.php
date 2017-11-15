@@ -48,10 +48,13 @@ abstract class Alipay implements GatewayInterface
         }
 
         $this->config = [
+            'service' => 'mobile.securitypay.pay',
+            'partner' => $this->user_config->get('partner', ''),
             'app_id'      => $this->user_config->get('app_id'),
             'method'      => '',
+            'payment_type' => 1,
             'format'      => 'JSON',
-            'charset'     => 'utf-8',
+            '_input_charset'     => 'utf-8',
             'sign_type'   => 'RSA',
             //'sign_type'   => 'RSA2',
             'version'     => '1.0',
