@@ -606,9 +606,9 @@ class ApiController extends Controller
     public function payRequest(Request $request){
         header("Content-type:text/html;charset=utf-8");
         $config_biz = [
-            'out_trade_no' => time(),
-            'total_amount' => '1',
-            'subject'      => 'test subject',
+            'out_trade_no' => date('YmdHis') . mt_rand(1000,9999),
+            'subject' => 'Alipay Test',
+            'total_fee' => '0.01',
         ];
 
 
