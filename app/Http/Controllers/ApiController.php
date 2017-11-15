@@ -18,9 +18,9 @@ class ApiController extends Controller
             //'app_id' => '2016081500253568',
             //'notify_url' => 'http://jhqck.com/kaisa/public/api/alipay_notify',
             'return_url' => 'http://jhqck.com/kaisa/public/api/alipay_notify',
-            'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDhQ/VT3joAmUTtD0KpZl87M1YYa6oDIEBzPMScYuC958TkV7AZ7UbEzJNrlqQ4NbBmLPltrqsgceP5X0c7qyafoFby+PMKOP+6PRYNTqIrp3mbLCaLD6fF10XYrmJ6hhEndLQKz4JR9i6wkGUwvwJ8gSX52VDgYnimv9Cy71KoPQIDAQAB',
+            //'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDhQ/VT3joAmUTtD0KpZl87M1YYa6oDIEBzPMScYuC958TkV7AZ7UbEzJNrlqQ4NbBmLPltrqsgceP5X0c7qyafoFby+PMKOP+6PRYNTqIrp3mbLCaLD6fF10XYrmJ6hhEndLQKz4JR9i6wkGUwvwJ8gSX52VDgYnimv9Cy71KoPQIDAQAB',
             //支付宝公钥
-            //'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB',
+            'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB',
             'private_key' => 'MIICXQIBAAKBgQDhQ/VT3joAmUTtD0KpZl87M1YYa6oDIEBzPMScYuC958TkV7AZ7UbEzJNrlqQ4NbBmLPltrqsgceP5X0c7qyafoFby+PMKOP+6PRYNTqIrp3mbLCaLD6fF10XYrmJ6hhEndLQKz4JR9i6wkGUwvwJ8gSX52VDgYnimv9Cy71KoPQIDAQABAoGAV/SF9LI/aX5u2DTuLWCIbIAV7MEVB9Vu9M/UYM+Guv+k9Bd87hKkYDEUmpyeEEh+UNbcqUPbE3cEsZjPInAoSs3zOz62/L3XYzmA//EKBQtj1y5AJZHYqo9RL+M6FM5fJlq3xMkIuNfBokC+h2aw8dWPm9eShIBfXSVIi7HFna0CQQDxFZaP5ISFZ+cwWhWFXg88ryxDyfXn7oejma4HazcEl5QbC2mhGvlY1kF2llK92kXmw2v7frMo0kdmp6ERJZaDAkEA7zPSveQPOOtHlLXe72SQabORVOAAOzMZ7Sotv9jM3skSjmPgAp6r0Mrz/n+fJ8KdSDmpndmUQCTfIwAP+VCKPwJBANF7QrKRjB0nZZl8DUsvqem/BKV6rbP0bePYO4GyxcG1vDmrtwMIHzX0JjnW8NqK+UZE9GU5eI+199jZO3lcweUCQQCVjsFlGQKrg+/tewk4hJgGfs+PUb7TRNAhCQ4xtUviv7VqcefNu4eRtFN5/DF2mqfcULFMkI2wzVz2dUOHjmPhAkAfwwARrXfic2CzHULmMuIh3hoUuP14JlqU/VeCVU/AQrRob+l2eUa/I5RqYpMqFwnkNzCUhrU3T2l8pu7w054j',
         ],
     ];
@@ -604,7 +604,7 @@ class ApiController extends Controller
     }
 
 
-    public function payRequest_2(Request $request){
+    public function payRequest(Request $request){
         header("Content-type:text/html;charset=utf-8");
         $config_biz = [
             'out_trade_no' => date('YmdHis') . mt_rand(1000,9999),
@@ -631,7 +631,7 @@ class ApiController extends Controller
     }
 
 
-    public function payRequest(Request $request){
+    public function payRequest_2(Request $request){
         $aop = new \AopClient();
         $aop->gatewayUrl = "https://openapi.alipay.com/gateway.do";
         $aop->appId = "2017110909830350";
