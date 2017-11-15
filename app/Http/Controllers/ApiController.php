@@ -604,7 +604,7 @@ class ApiController extends Controller
     }
 
 
-    public function payRequest(Request $request){
+    public function payRequest_2(Request $request){
         header("Content-type:text/html;charset=utf-8");
         $config_biz = [
             'out_trade_no' => date('YmdHis') . mt_rand(1000,9999),
@@ -631,7 +631,7 @@ class ApiController extends Controller
     }
 
 
-    public function payRequest_2(Request $request){
+    public function payRequest(Request $request){
         $aop = new \AopClient();
         $aop->gatewayUrl = "https://openapi.alipay.com/gateway.do";
         $aop->appId = "2017110909830350";
