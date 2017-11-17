@@ -153,6 +153,7 @@ class ApiController extends Controller
 
         //取缓存number 看生成到第几期了
         $date = date('Ymd');
+        Cache::put('date',$date,1440);
         if(Cache::get('date')){
             if($date != Cache::get('date')){
                 Cache::put('date',$date,1440);
