@@ -84,6 +84,7 @@ class ApiController extends Controller
                 $return_arr['userinfo'] = DB::table('user') -> where([
                         'openid' => $openid
                 ]) -> first();
+
                 if(isset($data2['open_id'])){
                     $return_arr['xiazhu'] = DB::table('touzhu') -> where([
                         //number
@@ -429,6 +430,7 @@ class ApiController extends Controller
         Cache::forever('open_number_'.$open_number_id,[
             'prize_number' => $data -> prize_number,
             'open_number' => $number_res,
+            'open_id' => $data -> id
         ]);
         //Cache::forever();
 
