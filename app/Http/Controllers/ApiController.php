@@ -155,7 +155,7 @@ class ApiController extends Controller
         $date = date('Ymd');
         Cache::put('date',$date,1440);
 
-        
+
         
         //查看今天生成的序号
         if(Cache::get('number')){

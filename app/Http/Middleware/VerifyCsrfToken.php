@@ -22,6 +22,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/api/alipay',
         '/api/alipay_notify',
         '/api/return_req',
+        '/api/makeNextPrize',
 
     ];
 }
