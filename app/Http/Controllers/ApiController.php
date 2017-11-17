@@ -84,10 +84,13 @@ class ApiController extends Controller
                 $return_arr['userinfo'] = DB::table('user') -> where([
                         'openid' => $openid
                 ]) -> first();
-                $return_arr['xiazhu'] = DB::table('touzhu') -> where([
-                    //number
-                    'number' => $data2['open_id']
-                ]) -> get();
+                if(isset($data2['open_id'])){
+                    $return_arr['xiazhu'] = DB::table('touzhu') -> where([
+                        //number
+                        'number' => $data2['open_id']
+                    ]) -> get();
+                }
+
             }
 
             return response() -> json($return_arr);
