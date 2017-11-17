@@ -593,7 +593,7 @@ class ApiController extends Controller
             'code' => $new_yaoqing,
             'code_other' => $yaoqingma,
             'uid' => $uid,
-            'point' => 0,
+
             'created_at' => time(),
             'updated_at' => time()
         ]);
@@ -602,7 +602,8 @@ class ApiController extends Controller
             return response() -> json([
                 'status' => 'success',
                 'code' => $new_yaoqing,
-                'uid' => $uid
+                'uid' => $uid,
+                'point' => 0,
             ]);
         }
     }
