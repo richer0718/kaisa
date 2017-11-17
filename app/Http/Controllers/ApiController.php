@@ -580,8 +580,11 @@ class ApiController extends Controller
             ]);
         }
 
+        //查处现在有多少用户
+        $user_count  = DB::table('user') -> count();
+        $num = intval($user_count) + 129876;
+        $uid = str_pad($num,6,"0",STR_PAD_LEFT);
 
-        $uid = substr(microtime(),0,6);
         //此人的邀请码
         $new_yaoqing = substr(md5(microtime(true)), 0, 6);
         $res = DB::table('user') -> insert([
@@ -606,6 +609,13 @@ class ApiController extends Controller
     //下订单
     public function makeOrder(){
         
+    }
+
+    //返回各级人数
+    public function getUserList(Request $request){
+        $openid = DB::table('user') -> where([
+           // 'openid' => $request ->
+        ]);
     }
 
 
