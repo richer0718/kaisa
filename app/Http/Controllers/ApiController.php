@@ -33,8 +33,9 @@ class ApiController extends Controller
 
     //获取最新开奖
     //客户端请求最新开奖信息
-    public function getNewPrize($openid = 0){
+    public function getNewPrize(Request $request){
         header('Access-Control-Allow-Origin:*');
+        $openid = $request -> input('openid');
         /*
         Cache::forever('end_number_info',[
             'prize_number' => 201711040293,
@@ -57,6 +58,7 @@ class ApiController extends Controller
             //根据id拿历史记录
             $number2 = intval($end_number_info['id'])  - 1;
             $number3 = intval($end_number_info['id'])  - 2;
+            $number4 = intval($end_number_info['id'])  - 3;
 
             $return_arr = [];
             //返回最新一期的期数
@@ -66,9 +68,27 @@ class ApiController extends Controller
             //第一期已经开奖的时间
             //已经开奖的时间
             $return_arr['open_time'] = time() - $create_time;
-            //获取第二期第三期数据
-            $return_arr['history'][] = $this -> getOpenLog($number2);
-            $return_arr['history'][] = $this -> getOpenLog($number3);
+            //获取第二期第三期第四期数据
+            $data2 = $this -> getOpenLog($number2);
+            $data3 = $this -> getOpenLog($number3);
+            $data4 = $this -> getOpenLog($number4);
+
+
+
+            $return_arr['history'][] = $data2;
+            $return_arr['history'][] = $data3;
+            $return_arr['history'][] = $data4;
+
+            //返回这个人的余额
+            if($openid){
+                $return_arr['userinfo'] = DB::table('user') -> where([
+                        'openid' => $openid
+                ]) -> first();
+                $return_arr['xiazhu'] = DB::table('touzhu') -> where([
+                    //number
+                    'number' => $data2['prize_number']
+                ]) -> get();
+            }
 
             return response() -> json($return_arr);
         }else{
