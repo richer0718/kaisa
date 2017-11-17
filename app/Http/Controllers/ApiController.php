@@ -593,6 +593,7 @@ class ApiController extends Controller
             'code' => $new_yaoqing,
             'code_other' => $yaoqingma,
             'uid' => $uid,
+            'point' => 0,
             'created_at' => time(),
             'updated_at' => time()
         ]);
