@@ -86,7 +86,7 @@ class ApiController extends Controller
                 ]) -> first();
                 $return_arr['xiazhu'] = DB::table('touzhu') -> where([
                     //number
-                    'number' => $data2['id']
+                    'number' => $data2['open_id']
                 ]) -> get();
             }
 
@@ -530,13 +530,13 @@ class ApiController extends Controller
                 Cache::forever('open_number_'.$open_id,[
                     'prize_number' => $data -> prize_number,
                     'open_number' => $data -> open_number,
-                    'id' => $data -> id
+                    'open_id' => $data -> id
                 ]);
 
                 $arr = [
                     'prize_number' => $data -> prize_number,
                     'open_number' => $data -> open_number,
-                    'id' => $data -> id
+                    'open_id' => $data -> id
                 ];
                 return $arr;
             }else{
