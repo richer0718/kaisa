@@ -603,63 +603,14 @@ class ApiController extends Controller
         }
     }
 
-
-    public function payRequest_2(Request $request){
-        header("Content-type:text/html;charset=utf-8");
-        $config_biz = [
-            'out_trade_no' => date('YmdHis') . mt_rand(1000,9999),
-            'subject' => 'Alipay Test',
-            'total_fee' => '0.01',
-        ];
-
-
-        $pay = new Pay($this->config);
-
-        return $pay->driver('alipay')->gateway('app')->pay($config_biz);
-    }
-
-    public function notify(Request $request){
-        $pay = new Pay($this->config);
-
-        return $pay->driver('alipay')->gateway()->verify($request->all());
-    }
-
-    public function return_req(Request $request){
-        $pay = new Pay($this->config);
-
-        return $pay->driver('alipay')->gateway()->verify($request->all());
+    //下订单
+    public function makeOrder(){
+        
     }
 
 
-    public function payRequest(Request $request){
-
-        $aop = new AopClient;
-        $aop->gatewayUrl = "https://openapi.alipay.com/gateway.do";
-        $aop->appId = "2017110909830350";
-        $aop->rsaPrivateKey = 'MIICXQIBAAKBgQDhQ/VT3joAmUTtD0KpZl87M1YYa6oDIEBzPMScYuC958TkV7AZ7UbEzJNrlqQ4NbBmLPltrqsgceP5X0c7qyafoFby+PMKOP+6PRYNTqIrp3mbLCaLD6fF10XYrmJ6hhEndLQKz4JR9i6wkGUwvwJ8gSX52VDgYnimv9Cy71KoPQIDAQABAoGAV/SF9LI/aX5u2DTuLWCIbIAV7MEVB9Vu9M/UYM+Guv+k9Bd87hKkYDEUmpyeEEh+UNbcqUPbE3cEsZjPInAoSs3zOz62/L3XYzmA//EKBQtj1y5AJZHYqo9RL+M6FM5fJlq3xMkIuNfBokC+h2aw8dWPm9eShIBfXSVIi7HFna0CQQDxFZaP5ISFZ+cwWhWFXg88ryxDyfXn7oejma4HazcEl5QbC2mhGvlY1kF2llK92kXmw2v7frMo0kdmp6ERJZaDAkEA7zPSveQPOOtHlLXe72SQabORVOAAOzMZ7Sotv9jM3skSjmPgAp6r0Mrz/n+fJ8KdSDmpndmUQCTfIwAP+VCKPwJBANF7QrKRjB0nZZl8DUsvqem/BKV6rbP0bePYO4GyxcG1vDmrtwMIHzX0JjnW8NqK+UZE9GU5eI+199jZO3lcweUCQQCVjsFlGQKrg+/tewk4hJgGfs+PUb7TRNAhCQ4xtUviv7VqcefNu4eRtFN5/DF2mqfcULFMkI2wzVz2dUOHjmPhAkAfwwARrXfic2CzHULmMuIh3hoUuP14JlqU/VeCVU/AQrRob+l2eUa/I5RqYpMqFwnkNzCUhrU3T2l8pu7w054j' ;
-        $aop->format = "json";
-        $aop->charset = "UTF-8";
-        $aop->signType = "RSA";
-        $aop->alipayrsaPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB';
-//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
-        $request = new AlipayTradeAppPayRequest();
-//SDK已经封装掉了公共参数，这里只需要传入业务参数
-        $bizcontent = "{\"body\":\"我是测试数据\","
-            . "\"subject\": \"App支付测试\","
-            . "\"out_trade_no\": \"20170125test01\","
-            . "\"timeout_express\": \"30m\","
-            . "\"total_amount\": \"0.01\","
-            . "\"product_code\":\"QUICK_MSECURITY_PAY\""
-            . "}";
-        $request->setNotifyUrl("http://jhqck.com/kaisa/public/api/alipay_notify");
-        $request->setBizContent($bizcontent);
-//这里和普通的接口调用不同，使用的是sdkExecute
-        $response = $aop->sdkExecute($request);
-//htmlspecialchars是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
-        echo htmlspecialchars($response);//就是orderString 可以直接给客户端请求，无需再做处理。
 
 
-    }
 
 
 
