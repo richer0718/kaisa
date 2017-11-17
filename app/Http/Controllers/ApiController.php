@@ -239,12 +239,21 @@ class ApiController extends Controller
         $point = $request -> input('point');
         //投注期数id
         $number = $request -> input('qishu');
+
         if($openid && $option && $point && $number){
 
         //查下此 option在不在
          $options = config('kaisa.options');
          if(!in_array($option,$options)){
              //return response() -> json(['status'=>'super-error']);
+         }
+
+         //查下点数够不够
+        $userinfo = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+         if($userinfo -> point < $point){
+             return response() -> json(['status'=>'notenough']);
          }
         //存入投注表
         DB::table('touzhu') -> insert([
@@ -254,6 +263,14 @@ class ApiController extends Controller
             'point' => $point,
             'created_at' => time()
         ]);
+
+         //扣除
+            DB::table('user') -> where([
+                'openid' => $openid
+            ]) -> update([
+                'point' => $userinfo -> point - $point
+            ]);
+
             return response() -> json(['status'=>'success']);
 
 
