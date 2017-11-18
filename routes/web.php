@@ -61,6 +61,8 @@ Route::group(['prefix' => 'api'], function () {
     //转账
     Route::any('/givePoint','ApiController@givePoint');
 
+    Route::any('/getCode','ApiController@getCode');
+
 
 
     Route::any('/clearCache', 'ApiController@clearCache');
@@ -77,7 +79,7 @@ Route::any('/admin/loginout', 'Admin\IndexController@loginout');
 Route::group(['as' => 'user','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/user', 'Admin\UserController@index');
     Route::any('/admin/duihuan', 'Admin\UserController@duihuan');
-    Route::any('/admin/userlog', 'Admin\UserController@userlog');
+    Route::any('/admin/userlog/{id}', 'Admin\UserController@userlog');
 });
 Route::group(['as' => 'prize','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/prize', 'Admin\PrizeController@index');

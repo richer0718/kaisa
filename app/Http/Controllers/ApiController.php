@@ -976,6 +976,24 @@ class ApiController extends Controller
         }
     }
 
+    //获取验证码
+    public function getCode(Request $request){
+        $openid = $request -> input('openid');
+        if(!$openid){
+            return response() -> json(['status'=>'error']);
+        }
+        //生成验证码
+        $code = rand(123600,999999);
+        DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> update([
+            'yanzhengma' => $code
+        ]);
+
+        return response() -> json(['status'=>'success','code'=>$code]);
+
+    }
+
 
 
 
