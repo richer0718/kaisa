@@ -687,6 +687,17 @@ class ApiController extends Controller
         //看下多少钱可以买多少点
         $point = $price;
 
+        if($openid){
+            $userinfo = DB::table('user') -> where([
+                'openid' => $openid
+            ]) -> first();
+            if(!$userinfo){
+                return response() -> json(['status'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
+
         DB::table('buylog') -> insert([
             'openid' => $openid,
             //'prize' => $price,
@@ -697,7 +708,9 @@ class ApiController extends Controller
         //在user表中加入记录
         DB::table('user') -> where([
             'openid' => $openid
-        ]) -> increment('point',$point);
+        ]) -> update([
+            'point' => $userinfo -> point + $point
+        ]);
 
         //返回最终点数
         $userinfo = DB::table('user') -> where([
