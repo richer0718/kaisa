@@ -1,6 +1,6 @@
 <?php
 /**
- * ALIPAY API: alipay.daowei.service.price.modify request
+ * ALIPAY API: alipay.daowei.service.prize.modify request
  *
  * @author auto create
  * @since 1.0, 2017-06-12 10:29:34
@@ -35,7 +35,7 @@ class AlipayDaoweiServicePriceModifyRequest
 
 	public function getApiMethodName()
 	{
-		return "alipay.daowei.service.price.modify";
+		return "alipay.daowei.service.prize.modify";
 	}
 
 	public function setNotifyUrl($notifyUrl)

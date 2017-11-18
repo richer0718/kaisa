@@ -252,6 +252,9 @@ class ApiController extends Controller
         $userinfo = DB::table('user') -> where([
             'openid' => $openid
         ]) -> first();
+         if(!$userinfo){
+             return response() -> json(['status'=>'error']);
+         }
          if($userinfo -> point < $point){
              return response() -> json(['status'=>'notenough']);
          }
@@ -265,11 +268,19 @@ class ApiController extends Controller
         ]);
 
          //扣除
-            DB::table('user') -> where([
-                'openid' => $openid
-            ]) -> update([
-                'point' => $userinfo -> point - $point
-            ]);
+        DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> update([
+            'point' => $userinfo -> point - $point
+        ]);
+
+        //他扣除 给他上级加钱 此人信息$userinfo
+            if($userinfo){
+                $this -> addPoint($openid,$userinfo -> openid_other,$point);
+            }
+
+
+
 
             return response() -> json(['status'=>'success']);
 
@@ -279,6 +290,66 @@ class ApiController extends Controller
         }
 
 
+    }
+
+    //第五级的openid
+
+    /**
+     * @param $openid_buy 买的那个openid
+     * @param $openid 需要加点数的openid
+     * @param $point
+     */
+    public function addPoint($openid_buy,$openid,$point){
+        $user5 = $this -> addPoints($openid_buy,$openid,$point,0.05);
+        if($user5){
+            $user4 = $this -> addPoints($openid_buy,$user5 -> openid_other,$point,0.03);
+            if($user4){
+                $user3 = $this -> addPoints($openid_buy,$user4 -> openid_other,$point,0.02);
+                if($user3){
+                    $user2 = $this -> addPoints($openid_buy,$user3 -> openid_other,$point,0.01);
+                    if($user2){
+                        //$user1 = $this -> addPoints($openid_buy,$user2 -> openid_other,$point,0.01);
+                    }
+                }
+            }
+        }
+    }
+
+    //下注 上级加点数
+
+    /**
+     * @param $openid
+     * @param $point 点数
+     * @param $per 应该扣的百分比
+     * @return bool
+     */
+    public function addPoints($openid_buy,$openid,$point,$per){
+        //查这个openid 有没有
+        $user = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+        if($user){
+            //如果有，就给他加钱
+            DB::table('user') -> where([
+                'openid' => $openid
+            ]) -> update([
+                'point' => $user -> point + $point * $per
+            ]);
+
+            //记录代理入款记录
+            DB::table('daili_log') -> insert([
+                'openid' => $openid,
+                'point' => $point * $per,
+                'openid_buy' => $openid_buy,
+                'created_at' => time()
+            ]);
+
+
+            return $user;
+
+        }else{
+            return false;
+        }
     }
 
 
@@ -436,7 +507,7 @@ class ApiController extends Controller
         //返回后三位数字
         $number_end = $this -> jisuan($open_number_id);
         //获取前6位数字
-        $number_pre = rand(1256600,9999999);
+        $number_pre = rand(1256600,1999999);
         //返回期数开奖数字
         $number_res = $number_pre.$number_end;
         //通过openprize id 查找期数
@@ -462,10 +533,110 @@ class ApiController extends Controller
             //开奖数字
             'open_number' => $number_res
         ]);
+
+        //开完奖，结账
+        $this -> countOrder($number_res,$open_number_id);
+
+
+
+
         Cache::forever('is_stop',0);
         //var_dump($number_res);exit;
         return $number_res;
     }
+
+
+    //开奖后 结账
+    public function  countOrder($number = 23432554,$id = 495){
+        //算下这个数字，哪个选项中了。
+        $options = config('kaisa.options');
+        //大小合
+        //看下十位个位是否相同
+        $number_ge = substr($number,strlen($number)-1,1);
+        $number_shi = substr($number,strlen($number) -2,1);
+        $option_open_numbers = [];
+        $option_open_peilv = [];
+
+        if($number_ge == $number_shi){
+            //开合
+            $option_open_peilv[] = $options['3']['peilv'];
+            $option_open_numbers[] = 3;
+            unset($options['1']);
+            unset($options['2']);
+            unset($options['3']);
+        }
+        //看下其他
+        foreach($options as $k => $vo){
+            $temp_number = $vo['number'];
+            if(in_array($number_ge,$temp_number)){
+                $option_open_peilv[] = $options[$k]['peilv'];
+                $option_open_numbers[] = $k;
+            }
+        }
+
+        //得到开奖的option
+        $touzhus = DB::table('touzhu') -> where([
+            'number' => $id
+        ]) -> get();
+        //给每个人开奖
+        if($touzhus){
+            $buy_plus = [];
+            $buy_ext = [];
+            foreach($touzhus as $key => $vo){
+                //投的选项
+                $temp_option = $vo -> buy_option;
+                //投的点数
+                $temp_point = $vo -> point;
+                //投的openid
+                $temp_openid = $vo -> openid;
+                if($temp_option && $temp_point && $temp_openid){
+                    //var_dump($option_open_numbers);exit;
+                    //看下他挣了赔了
+                    if(in_array($temp_option,$option_open_numbers)){
+                        //得到索引
+                        $index = array_keys($option_open_numbers,$temp_option);
+                        //dd($option_open_peilv[$index[0]]);
+                        //var_dump($option_open_peilv);exit;
+                        //挣了,把ta的钱给加上
+                        $buy_plus[$key]['openid'] = $temp_openid;
+                        $buy_plus[$key]['point'] = $temp_point * $option_open_peilv[$index[0]];
+                    }else{
+
+                        //赔了 就全部减去
+                        $buy_ext[$key]['openid'] = $temp_openid;
+                        $buy_ext[$key]['point'] = $temp_point;
+                    }
+
+                }else{
+                    continue;
+                }
+            }
+
+
+            //该加的加上
+            foreach($buy_plus as $vo){
+                //开始处理
+                DB::table('user') -> where([
+                    'openid' => $vo['openid']
+                ]) -> increment('point',$vo['point']);
+                //输赢记录
+            }
+
+            //该扣的扣掉
+            foreach($buy_ext as $vo){
+                DB::table('user') -> where([
+                    'openid' => $vo['openid']
+                ]) -> decrement('point',$vo['point']);
+                //输赢记录
+            }
+
+
+
+
+
+        }
+    }
+
 
     //返回历史记录
     public function getHistoryData(Request $request){
@@ -512,13 +683,13 @@ class ApiController extends Controller
     public function recharge(Request $request){
         header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
-        $price = $request -> input('price');
+        $price = $request -> input('prize');
         //看下多少钱可以买多少点
         $point = $price;
 
         DB::table('buylog') -> insert([
             'openid' => $openid,
-            'price' => $price,
+            'prize' => $price,
             'point' => $point,
             'created_at' => time()
         ]);
@@ -620,6 +791,12 @@ class ApiController extends Controller
             ]);
         }
 
+        if($is_code){
+            $other_openid = $is_code -> openid;
+        }else{
+            $other_openid = '';
+        }
+
         //查处现在有多少用户
         $user_count  = DB::table('user') -> count();
         $num = intval($user_count) + 129876;
@@ -633,7 +810,7 @@ class ApiController extends Controller
             'code' => $new_yaoqing,
             'code_other' => $yaoqingma,
             'uid' => $uid,
-
+            'openid_other' => $other_openid,
             'created_at' => time(),
             'updated_at' => time()
         ]);
@@ -658,6 +835,41 @@ class ApiController extends Controller
         $openid = DB::table('user') -> where([
            // 'openid' => $request ->
         ]);
+    }
+
+
+    //返回充值记录
+    public function rechargeLog(Request $request){
+        $openid = $request -> input('openid');
+        if($openid){
+            $logs = DB::table('buylog') -> where([
+                'openid' => $openid
+            ]) -> get();
+            if($logs){
+                return response() -> json($logs);
+            }else{
+                return response() -> json(['openid'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
+    }
+
+    //返回佣金记录
+    public function yongjinLog(Request $request){
+        $openid = $request -> input('openid');
+        if($openid){
+            $logs = DB::table('daili_log') -> where([
+                'openid' => $openid
+            ]) -> get();
+            if($logs){
+                return response() -> json($logs);
+            }else{
+                return response() -> json(['openid'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
     }
 
 

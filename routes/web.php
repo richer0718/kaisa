@@ -43,11 +43,17 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/buyLog', 'ApiController@getHistoryData');
     //充值(暂时)
     Route::any('/recharge', 'ApiController@recharge');
+    //充值记录
+    Route::any('/rechargeLog', 'ApiController@rechargeLog');
+    //佣金记录
+    Route::any('/yongjinLog', 'ApiController@yongjinLog');
     //阿里支付请求
     Route::any('/alipay','ApiController@payRequest');
 
     Route::any('/alipay_notify','ApiController@notify');
     Route::any('/return_req','ApiController@return_req');
+    //结账
+    Route::any('/countOrder','ApiController@countOrder');
 
 
 
@@ -64,4 +70,8 @@ Route::any('/admin/loginout', 'Admin\IndexController@loginout');
 
 Route::group(['as' => 'user','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/user', 'Admin\UserController@index');
+    Route::any('/admin/duihuan', 'Admin\UserController@duihuan');
+});
+Route::group(['as' => 'prize','middleware' => ['checkadminlogin']], function () {
+    Route::any('/admin/prize', 'Admin\PrizeController@index');
 });

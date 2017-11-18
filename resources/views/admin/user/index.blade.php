@@ -10,8 +10,7 @@
 
 
         <ol class="breadcrumb">
-            <li>总用户：1000个</li>
-            <li>已充值用户：1000个</li>
+            <li>总用户：{{ $count }}</li>
         </ol>
 
 
@@ -22,11 +21,8 @@
                 <thead>
                 <tr>
                     <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">ID</span></th>
-                    <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >用户昵称</span></th>
                     <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >微信名称</span></th>
-                    <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg">微信头像</span></th>
                     <th><span class="glyphicon glyphicon-signal"></span> <span class="visible-lg">充值点数</span></th>
-                    <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">投注点数</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">邀请码</span></th>
 
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">注册时间</span></th>
@@ -40,18 +36,10 @@
                         <tr>
                             <td>{{ $k + 1 }}</td>
                             <td>{{$vo -> nickname }}</td>
-                            <td>{{$vo -> add_user }}</td>
-                            <td>{{$vo -> pass }}</td>
-                            <td>{{$vo -> area }}</td>
-                            <td>{{$vo -> use_time}}</td>
-                            <td>{{$vo -> save_time}}</td>
-                            <td>{{$vo -> map}}</td>
-                            <td>{{$vo -> mode}}</td>
-                            <td>{{$vo -> status}}</td>
-                            <td>{{$vo -> device}}</td>
-
+                            <td>{{$vo -> point }}</td>
+                            <td>{{$vo -> code}}</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
-
+                            <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a></td>
                         </tr>
                     @endforeach
                 @endunless
@@ -60,7 +48,7 @@
                 <tfoot>
                     <tr>
 
-                        <td colspan="12">{{ $res -> links() }}</td>
+                        <td colspan="6">{{ $res -> links() }}</td>
                     </tr>
                 </tfoot>
                 @endif
@@ -68,13 +56,13 @@
         </div>
     </div>
     <!-- 充值 -->
-    <div class="modal fade " id="recharge" tabindex="-1" role="dialog"  >
+    <div class="modal fade " id="duihuan_box" tabindex="-1" role="dialog"  >
         <div class="modal-dialog" role="document" style="width:900px;">
-            <form action="{{ url('manage/rechargeRes') }}" method="post" autocomplete="off" draggable="false" id="myForm">
+            <form action="{{ url('admin/duihuan') }}" method="post" autocomplete="off" draggable="false" id="myForm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >充值</h4>
+                        <h4 class="modal-title" >兑换</h4>
                     </div>
                     <div class="modal-body">
                         <table class="table" style="margin-bottom:0px;">
@@ -82,50 +70,20 @@
                             <tr> </tr>
                             </thead>
                             <tbody>
-
+                            <input type="hidden" name="openid" id="openid" />
                             <tr>
-                                <td wdith="10%">充值码:</td>
-                                <td width="90%"><input type="text" value="" class="form-control" name="code" maxlength="" autocomplete="off" required/></td>
-                            </tr>
-
-                            {{ csrf_field() }}
-                            </tbody>
-                            <tfoot>
-                            <tr></tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary">确认</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- 确认充值 -->
-    <div class="modal fade " id="recharge_true" tabindex="-1" role="dialog"  >
-        <div class="modal-dialog" role="document" style="width:400px;">
-            <form action="{{ url('manage/rechargeConfirm') }}" method="post" autocomplete="off" draggable="false" id="myForm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >{{ session('username') }} ，您确认充值么？</h4>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table" style="margin-bottom:0px;">
-                            <thead>
-                            <tr> </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr>
-                                <td colspan="2">
-                                    <p style="font-size: 20px;">该充值码点数为:{{ session('recharge_true')['point'].'点' }}</p>
+                                <td wdith="10%">微信名:</td>
+                                <td width="90%">
+                                    <input type="text" value="" class="form-control" disabled id="nickname"/>
                                 </td>
                             </tr>
-                            <input type="hidden" name="code" value="{{ session('recharge_true')['code'] }}" />
+                            
+                            <tr>
+                                <td wdith="10%">兑换点数:</td>
+                                <td width="90%">
+                                    <input type="number" value="" name="point" id="duihuan_point" class="form-control" maxlength=""  required/>
+                                </td>
+                            </tr>
 
                             {{ csrf_field() }}
                             </tbody>
@@ -143,64 +101,33 @@
         </div>
     </div>
 
-    <!-- 停挂 -->
-    <div class="modal fade " id="stopnumber" tabindex="-1" role="dialog"  >
-        <div class="modal-dialog" role="document" style="width:400px;">
-            <form action="{{ url('manage/stopNumber') }}" method="post" autocomplete="off" draggable="false" id="myForm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >提醒</h4>
-                    </div>
-                    {{ csrf_field() }}
-                    <input type="hidden" name="id" id="number_id" />
-                    <div class="modal-body">
 
-                        <h4 class="modal-title" >您将手动停止代挂。该账号剩余挂机次数为：<a id="numbertime"></a>次，未使用部分，将回收。中途停挂违约费用扣除100点</h4>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary">确认</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <script>
-        @if (session('insertres'))
-            alert('添加成功！');
-        @endif
-        @if (session('editres'))
-            alert('修改成功！');
-        @endif
-        @if (session('stopres'))
-            alert('停挂成功！');
-        @endif
-        @if (session('rechargeres') && session('rechargeres') == 'success')
-            alert('充值成功！');
-        @endif
-        @if (session('rechargeres') && session('rechargeres') == 'error')
-            alert('请核对后，再提交，如有疑问，联系QQ：972102275！');
-        @endif
 
+        $('.duihuan').click(function(){
+            $('#duihuan_point').val($(this).attr('point'));
+            $('#nickname').val($(this).attr('nickname'));
+            $('#openid').val($(this).attr('openid'));
+
+            $('#duihuan_point').attr('max',$(this).attr('point'));
+            $('#duihuan_box').modal('show');
+        })
     </script>
     <script>
         $(function(){
             //数据验证
             $('#myForm').submit(function(){
-                var length = $.trim( $('input[name=code]').val() ).length ;
-                if( length != 16 ){
-                    alert('充值码有误');return false;
-                }
+                return true;
             })
 
             @if (session('recharge_true'))
                 $('#recharge_true').modal('show')
             @endif
 
-
+            @if(session('duihuan'))
+            alert('兑换成功');
+            @endif
             @if (session('isset'))
                 alert('{{ session('isset') }}');
             @endif

@@ -63,13 +63,13 @@ m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点�
 	
 	/** 
 	 * 订单中商品的单价。
-如果请求时传入本参数，则必须满足total_fee=price×quantity的条件
+如果请求时传入本参数，则必须满足total_fee=prize×quantity的条件
 	 **/
 	private $price;
 	
 	/** 
 	 * 订单中商品的数量。
-如果请求时传入本参数，则必须满足total_fee=price×quantity的条件
+如果请求时传入本参数，则必须满足total_fee=prize×quantity的条件
 	 **/
 	private $quantity;
 	
@@ -221,7 +221,7 @@ m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点�
 	public function setPrice($price)
 	{
 		$this->price = $price;
-		$this->apiParas["price"] = $price;
+		$this->apiParas["prize"] = $price;
 	}
 
 	public function getPrice()
