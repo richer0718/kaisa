@@ -54,6 +54,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/return_req','ApiController@return_req');
     //结账
     Route::any('/countOrder','ApiController@countOrder');
+    //兑换
+    Route::any('/duihuanLog','ApiController@duihuanLog');
 
 
 

@@ -25,6 +25,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/api/makeNextPrize',
         '/api/rechargeLog',
         '/api/yongjinLog',
+        '/api/duihuanLog',
 
     ];
 }

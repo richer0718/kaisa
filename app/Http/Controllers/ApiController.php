@@ -872,6 +872,23 @@ class ApiController extends Controller
         }
     }
 
+    //兑换记录
+    public function duihuanLog(Request $request){
+        $openid = $request -> input('openid');
+        if($openid){
+            $logs = DB::table('duihuan_log') -> where([
+                'openid' => $openid
+            ]) -> get();
+            if($logs){
+                return response() -> json($logs);
+            }else{
+                return response() -> json(['openid'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
+    }
+
 
 
 
