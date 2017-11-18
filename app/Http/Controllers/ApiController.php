@@ -689,7 +689,7 @@ class ApiController extends Controller
 
         DB::table('buylog') -> insert([
             'openid' => $openid,
-            'prize' => $price,
+            //'prize' => $price,
             'point' => $point,
             'created_at' => time()
         ]);
