@@ -62,6 +62,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/givePoint','ApiController@givePoint');
 
     Route::any('/getCode','ApiController@getCode');
+    Route::any('/getUserList','ApiController@getUserList');
 
 
 
@@ -71,10 +72,14 @@ Route::group(['prefix' => 'api'], function () {
 });
 
 //后台
-Route::get('/admin/index', 'Admin\IndexController@index');
+
 Route::get('/admin/login', 'Admin\IndexController@login');
 Route::any('/admin/loginRes', 'Admin\IndexController@loginRes');
 Route::any('/admin/loginout', 'Admin\IndexController@loginout');
+
+Route::group(['as' => 'index','middleware' => ['checkadminlogin']], function () {
+    Route::get('/admin/index', 'Admin\IndexController@index');
+});
 
 Route::group(['as' => 'user','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/user', 'Admin\UserController@index');

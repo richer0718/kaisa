@@ -845,9 +845,59 @@ class ApiController extends Controller
 
     //返回各级人数
     public function getUserList(Request $request){
-        $openid = DB::table('user') -> where([
-           // 'openid' => $request ->
+        header('Access-Control-Allow-Origin:*');
+        $openid = $request -> input('openid');
+
+        if(!$openid){
+            return response() -> json([
+                'status' => 'error'
+            ]);
+        }
+        $userinfo = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+
+        if(!$userinfo){
+            return response() -> json([
+                'status' => 'error'
+            ]);
+        }
+
+        $return['userinfo'] = $userinfo;
+        //各级代理人数
+        $tmp_1 = DB::table('user') -> where([
+            'code_other' => $userinfo -> code
+        ]) -> get();
+        $return['daili1'] = count($tmp_1);
+
+        if(count($tmp_1)){
+            $tmp_1_codes = [];
+            //拿到一级代理的所有openid
+            foreach($tmp_1 as $vo){
+                $tmp_1_codes[] = $vo -> code;
+            }
+            $tmp_2 = DB::table('user') -> whereIn('code_other',$tmp_1_codes) -> get();
+            $return['daili2'] = count($tmp_2);
+            if(count($tmp_2)){
+                $tmp_2_codes = [];
+                //拿到一级代理的所有openid
+                foreach($tmp_2 as $vo){
+                    $tmp_2_codes[] = $vo -> code;
+                }
+                $tmp_3 = DB::table('user') -> whereIn('code_other',$tmp_2_codes) -> get();
+                $return['daili3'] = count($tmp_3);
+            }
+
+        }
+
+
+
+        return response() -> json([
+            'status' => 'success',
+            'data' => $return
         ]);
+
+
     }
 
 
