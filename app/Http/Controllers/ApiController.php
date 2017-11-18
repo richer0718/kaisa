@@ -978,6 +978,7 @@ class ApiController extends Controller
 
     //获取验证码
     public function getCode(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         if(!$openid){
             return response() -> json(['status'=>'error']);
