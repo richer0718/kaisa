@@ -864,6 +864,11 @@ class ApiController extends Controller
         }
 
         $return['userinfo'] = $userinfo;
+        $return['daili1'] = 0;
+        $return['daili2'] = 0;
+        $return['daili3'] = 0;
+        $return['daili4'] = 0;
+        $return['daili5'] = 0;
         //各级代理人数
         $tmp_1 = DB::table('user') -> where([
             'code_other' => $userinfo -> code
