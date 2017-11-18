@@ -840,6 +840,7 @@ class ApiController extends Controller
 
     //返回充值记录
     public function rechargeLog(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         if($openid){
             $logs = DB::table('buylog') -> where([
@@ -857,6 +858,7 @@ class ApiController extends Controller
 
     //返回佣金记录
     public function yongjinLog(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         if($openid){
             $logs = DB::table('daili_log') -> where([
@@ -874,6 +876,7 @@ class ApiController extends Controller
 
     //兑换记录
     public function duihuanLog(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         if($openid){
             $logs = DB::table('duihuan_log') -> where([
