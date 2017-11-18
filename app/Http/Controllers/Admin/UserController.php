@@ -59,4 +59,8 @@ class UserController extends Controller
         }
     }
 
+    public function userlog($id){
+
+    }
+
 }

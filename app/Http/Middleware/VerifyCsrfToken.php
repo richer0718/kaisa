@@ -27,6 +27,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/api/yongjinLog',
         '/api/duihuanLog',
         '/api/xiazhuLog',
+        '/api/givePoint',
 
     ];
 }

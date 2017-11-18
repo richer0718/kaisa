@@ -911,6 +911,58 @@ class ApiController extends Controller
         }
     }
 
+    //转账
+    public function givePoint(Request $request ){
+        header('Access-Control-Allow-Origin:*');
+        $openid = $request -> input('openid');
+        $uid = $request -> input('uid');
+        $point = intval($request -> input('point'));
+
+        if($openid && $uid && $point){
+            //查下这人 有没有这么多
+            $userinfo = DB::table('user') -> where([
+                'openid' => $openid
+            ]) -> first();
+            if($userinfo){
+                if($userinfo -> point < $point){
+                    return response() -> json(['point'=>'error']);
+                }
+                //判断uid 是否存在
+                $isset = DB::table('user') -> where([
+                    'uid' => $uid
+                ]) -> first();
+                if($isset){
+                    // 开始转
+                    //先扣
+                    DB::table('user') -> where([
+                        'openid' => $openid
+                    ]) -> update([
+                        'point' => $userinfo -> point - $point
+                    ]);
+
+                    //加
+                    DB::table('user') -> where([
+                        'uid' => $uid
+                    ]) -> update([
+                        'point' => $isset -> point + $point
+                    ]);
+                    return response() -> json(['status'=>'success']);
+
+
+
+                }else{
+                    return response() -> json(['uid'=>'error']);
+                }
+
+
+            }else{
+                return response() -> json(['openid'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
+    }
+
 
 
 
