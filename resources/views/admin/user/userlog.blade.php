@@ -56,8 +56,23 @@
                 <h1 class="page-header">投注记录</h1>
 
                 <table class="table table-striped table-bordered" style="width:400px;">
-                    @if($chongzhi)
+                    @if($touzhu)
                         @foreach($touzhu as $vo)
+                            <tr>
+                                <td >{{ date('Y-m-d H:i:s',$vo -> created_at) }}</td>
+                                <td><input type="text" value="{{ $vo -> point }}" class="form-control" disabled/></td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </table>
+            </div>
+
+            <div class="col-md-12">
+                <h1 class="page-header">代理记录</h1>
+
+                <table class="table table-striped table-bordered" style="width:400px;">
+                    @if($daili)
+                        @foreach($daili as $vo)
                             <tr>
                                 <td >{{ date('Y-m-d H:i:s',$vo -> created_at) }}</td>
                                 <td><input type="text" value="{{ $vo -> point }}" class="form-control" disabled/></td>
