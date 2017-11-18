@@ -886,6 +886,31 @@ class ApiController extends Controller
                 }
                 $tmp_3 = DB::table('user') -> whereIn('code_other',$tmp_2_codes) -> get();
                 $return['daili3'] = count($tmp_3);
+                if(count($tmp_3)){
+                    $tmp_3_codes = [];
+                    //拿到一级代理的所有openid
+                    foreach($tmp_3 as $vo){
+                        $tmp_3_codes[] = $vo -> code;
+                    }
+                    $tmp_4 = DB::table('user') -> whereIn('code_other',$tmp_3_codes) -> get();
+                    $return['daili4'] = count($tmp_4);
+                    if(count($tmp_4)){
+                        $tmp_4_codes = [];
+                        //拿到一级代理的所有openid
+                        foreach($tmp_4 as $vo){
+                            $tmp_4_codes[] = $vo -> code;
+                        }
+                        $tmp_5 = DB::table('user') -> whereIn('code_other',$tmp_4_codes) -> get();
+                        $return['daili5'] = count($tmp_5);
+
+
+
+                    }
+
+
+                }
+
+
             }
 
         }
