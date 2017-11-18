@@ -275,9 +275,9 @@ class ApiController extends Controller
         ]);
 
         //他扣除 给他上级加钱 此人信息$userinfo
-            if($userinfo){
-                $this -> addPoint($openid,$userinfo -> openid_other,$point);
-            }
+        if($userinfo){
+            $this -> addPoint($openid,$userinfo -> openid_other,$point);
+        }
 
 
 
@@ -683,7 +683,7 @@ class ApiController extends Controller
     public function recharge(Request $request){
         header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
-        $price = $request -> input('prize');
+        $price = $request -> input('price');
         //看下多少钱可以买多少点
         $point = $price;
 
