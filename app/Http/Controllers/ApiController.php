@@ -893,6 +893,25 @@ class ApiController extends Controller
     }
 
 
+    //下注记录
+    public function xiazhuLog(Request $request){
+        header('Access-Control-Allow-Origin:*');
+        $openid = $request -> input('openid');
+        if($openid){
+            $logs = DB::table('touzhu') -> where([
+                'openid' => $openid
+            ]) -> get();
+            if($logs){
+                return response() -> json($logs);
+            }else{
+                return response() -> json(['openid'=>'error']);
+            }
+        }else{
+            return response() -> json(['status'=>'error']);
+        }
+    }
+
+
 
 
 

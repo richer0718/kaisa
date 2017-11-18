@@ -56,6 +56,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/countOrder','ApiController@countOrder');
     //兑换
     Route::any('/duihuanLog','ApiController@duihuanLog');
+    //下注记录
+    Route::any('/xiazhuLog','ApiController@xiazhuLog');
 
 
 
