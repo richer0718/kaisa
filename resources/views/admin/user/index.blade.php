@@ -49,6 +49,7 @@
                     <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >微信名称</span></th>
                     <th><span class="glyphicon glyphicon-signal"></span> <span class="visible-lg">充值点数</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">邀请码</span></th>
+                    <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">提现验证码</span></th>
 
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">注册时间</span></th>
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">操作</span></th>
@@ -63,6 +64,7 @@
                             <td>{{$vo -> nickname }}</td>
                             <td>{{$vo -> point }}</td>
                             <td>{{$vo -> code}}</td>
+                            <td>{{$vo -> yanzhengma}}</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
                             <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a> <a href="{{ url('admin/userlog').'/'.$vo -> id }}">查看记录</a></td>
                         </tr>
