@@ -273,7 +273,7 @@ class ApiController extends Controller
         ]) -> update([
             'point' => $userinfo -> point - $point
         ]);
-
+        //var_dump($userinfo);exit;
         //他扣除 给他上级加钱 此人信息$userinfo
         if($userinfo){
             $this -> addPoint($openid,$userinfo -> openid_other,$point);

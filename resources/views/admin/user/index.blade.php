@@ -8,7 +8,32 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main" style="max-height:800px;overflow: scroll;" >
 
 
+        <form method="post">
+            <table class="table" style="width:50%;">
+                <tr>
+                    <td>会员号：</td>
+                    <td>
+                        <input type="text" name="userid"  class="form-control" value="@if(!empty($_POST['userid'])){{ $_POST['userid'] }}@endif"/>
+                    </td>
 
+                    <td>微信名称</td>
+                    <td>
+                        <input type="text" name="nickname"  class="form-control" value="@if(!empty($_POST['nickname'])){{ $_POST['nickname'] }}@endif" />
+                    </td>
+
+
+
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                        <button class="btn btn-default" type="button" onclick="location.href='{{Request::getRequestUri()}}' ">重置</button>
+                    </td>
+                </tr>
+            </table>
+            {{ csrf_field() }}
+        </form>
         <ol class="breadcrumb">
             <li>总用户：{{ $count }}</li>
         </ol>
@@ -20,7 +45,7 @@
             <table class="table table-striped table-hover" id="mytable">
                 <thead>
                 <tr>
-                    <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">ID</span></th>
+                    <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">用户ID</span></th>
                     <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >微信名称</span></th>
                     <th><span class="glyphicon glyphicon-signal"></span> <span class="visible-lg">充值点数</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">邀请码</span></th>
@@ -34,12 +59,12 @@
                 @unless(!$res)
                     @foreach($res as $k => $vo)
                         <tr>
-                            <td>{{ $k + 1 }}</td>
+                            <td>{{ $vo -> uid}}</td>
                             <td>{{$vo -> nickname }}</td>
                             <td>{{$vo -> point }}</td>
                             <td>{{$vo -> code}}</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
-                            <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a></td>
+                            <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a> <a href="{{ url('admin/userlog').'/'.$vo -> id }}">查看记录</a></td>
                         </tr>
                     @endforeach
                 @endunless
@@ -77,7 +102,7 @@
                                     <input type="text" value="" class="form-control" disabled id="nickname"/>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td wdith="10%">兑换点数:</td>
                                 <td width="90%">

@@ -16,7 +16,14 @@ class UserController extends Controller
     //
     public function index(){
         //echo 1;exit;
-        $res = DB::table('user') -> paginate(15);
+        $res = DB::table('user') ->where(function($query){
+            if(!empty($_POST['userid'])){
+                $query -> where('uid','=',$_POST['userid']);
+            }
+            if(!empty($_POST['nickname'])){
+                $query -> where('nickname','like','%'.$_POST['nickname'].'%');
+            }
+        })-> paginate(15);
         //dd($res);
         //总人数
         $count = DB::table('user') -> count();
@@ -60,7 +67,33 @@ class UserController extends Controller
     }
 
     public function userlog($id){
+        //此人信息
+        $res_userinfo = DB::table('user') -> where([
+            'id' => $id
+        ]) -> first();
 
+
+        //这个人的投注记录
+        $res_touzhu = DB::table('touzhu') -> where([
+            'openid' => $res_userinfo -> openid
+        ]) -> get();
+
+        //充值
+        $res_chongzhi = DB::table('buylog') -> where([
+            'openid' => $res_userinfo -> openid
+        ]) -> get();
+
+        //代理
+        $res_daili = DB::table('daili_log') -> where([
+            'openid' => $res_userinfo -> openid
+        ]) -> get();
+
+        return view('admin/user/userlog')->with([
+            'userinfo' => $res_userinfo,
+            'touzhu' => $res_touzhu,
+            'chongzhi' => $res_chongzhi,
+            'daili' => $res_daili,
+        ]);
     }
 
 }
