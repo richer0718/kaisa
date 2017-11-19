@@ -278,6 +278,8 @@ class ApiController extends Controller
     }
 
     public function notify(Request $request){
+        file_put_contents('ttttyyy1.txt',1111);
+        file_put_contents('ttttyyy.txt',json_encode($_POST));
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
         include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
