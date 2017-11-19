@@ -48,7 +48,7 @@ Route::group(['prefix' => 'api'], function () {
     //佣金记录
     Route::any('/yongjinLog', 'ApiController@yongjinLog');
     //阿里支付请求
-    Route::any('/alipay','ApiController@payRequest');
+    Route::any('/alipay','ApiController@notify');
 
     Route::any('/alipay_notify','ApiController@notify');
     Route::any('/return_req','ApiController@return_req');

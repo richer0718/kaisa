@@ -30,6 +30,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/api/givePoint',
         '/api/getCode',
         '/api/getUserList',
+        '/api/payRequest',
 
     ];
 }
