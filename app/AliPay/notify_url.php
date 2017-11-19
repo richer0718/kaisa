@@ -19,11 +19,11 @@ require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
 //计算得出通知验证结果
-file_put_contents('ttttyyyttt.txt',json_encode($_POST));
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyNotify();
 
 if($verify_result) {//验证成功
+    file_put_contents('success.txt',json_encode($_POST));
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//请在这里加上商户的业务逻辑程序代
 
@@ -76,6 +76,7 @@ if($verify_result) {//验证成功
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 else {
+    file_put_contents('error.txt',json_encode($_POST));
     //验证失败
     echo "fail";
 
