@@ -38,6 +38,7 @@ class AlipayNotify {
      * @return 验证结果
      */
 	function verifyNotify(){
+        file_put_contents('ttttyyyttt222.txt',json_encode($_POST));
 		if(empty($_POST)) {//判断POST来的数组是否为空
 			return false;
 		}
