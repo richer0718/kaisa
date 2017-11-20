@@ -16,6 +16,14 @@ class ApiController extends Controller
         echo 'success';
     }
 
+
+
+    public function checkLogin($code){
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wx16137799d7567e8f&secret=0870cf68faef93d81e505bd0380a8da0&js_code='.$code.'&grant_type=authorization_code';
+        $result = file_get_contents($url);
+        return response() -> json($result);
+    }
+
     //获取最新开奖
     //客户端请求最新开奖信息
     public function getNewPrize(Request $request){
@@ -281,17 +289,17 @@ class ApiController extends Controller
 
 
     public function notify(Request $request){
-        header('Access-Control-Allow-Origin:*');
+        file_put_contents('ttttsss.txt',$request -> input('sign'));
+        //header('Access-Control-Allow-Origin:*');
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
         //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
 
         $url = 'http://m.jhqck.com/al/order/sign';
-        $post_data = array ([
-            'total_fee' => 0.01,
-            'out_trade_no' => 27389472384238
-        ]);
-        var_dump(11);exit;
+        $post_data = [
+            'total_fee' => 1,
+            'out_trade_no' => 6877976896
+        ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -305,6 +313,35 @@ class ApiController extends Controller
 
         //打印获得的数据
         print_r($output);
+
+        //验签完毕
+        $order_id = $_POST['out_trade_no'];
+        $price = $_POST['price'];
+        //查找buy_log
+        $log = DB::table('buy_log') -> where([
+            'order_id' => $order_id
+        ]) -> first();
+        if($log){
+            //更改is_pay
+            DB::table('buy_log') -> where([
+                'order_id' => $order_id
+            ]) -> update([
+                'is_pay' => 1,
+                'updated_at' => time()
+            ]);
+            //user 加余额
+            $user_info = DB::table('user') -> where([
+                'openid' => $log -> openid
+            ]) -> first();
+            DB::table('user') -> where([
+                'openid' => $log -> openid
+            ]) -> update([
+                'point' => $user_info -> point +$price
+            ]);
+            echo 'success';
+
+        }
+
 
 
 

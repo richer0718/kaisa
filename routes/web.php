@@ -19,6 +19,9 @@ Route::get('/getData', 'Admin\TestController@getData');
 
 //Api
 Route::group(['prefix' => 'api'], function () {
+    //回调
+    Route::any('/wxLogin/{code}','ApiController@checkLogin');
+
     //注册用户
     Route::any('/regUser', 'ApiController@regUser');
     //用户登录
@@ -50,7 +53,6 @@ Route::group(['prefix' => 'api'], function () {
     //阿里支付请求
     Route::any('/notify','ApiController@notify');
 
-    //Route::any('/alipay_notify','ApiController@notify');
     Route::any('/return_req','ApiController@return_req');
     //结账
     Route::any('/countOrder','ApiController@countOrder');
