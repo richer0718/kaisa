@@ -301,8 +301,8 @@ class ApiController extends Controller
         $url_verify = 'https://mapi.alipay.com/gateway.do?service=notify_verify&partner=2088621908302474&notify_id='.$_POST['notify_id'];
         $verify_res = file_get_contents($url_verify);
         file_put_contents('888888888.txt',$verify_res);
-        file_put_contents('666666666.txt',json_encode($_POST));
 
+        file_put_contents('55555.txt',json_encode($_POST));
 
         if($verify_res == 'true'){
             //验签完毕
@@ -313,6 +313,7 @@ class ApiController extends Controller
                 'order_id' => $order_id
             ]) -> first();
             if($log){
+                file_put_contents('111111.txt',json_encode($_POST));
                 //更改is_pay
                 DB::table('buy_log') -> where([
                     'order_id' => $order_id
@@ -327,7 +328,7 @@ class ApiController extends Controller
                 DB::table('user') -> where([
                     'openid' => $log -> openid
                 ]) -> update([
-                    'point' => $user_info -> point +$price
+                    'point' => $user_info -> point + $price
                 ]);
                 echo 'success';
 
