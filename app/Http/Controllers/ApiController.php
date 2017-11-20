@@ -301,6 +301,7 @@ class ApiController extends Controller
         $url_verify = 'https://mapi.alipay.com/gateway.do?service=notify_verify&partner=2088621908302474&notify_id='.$_POST['notify_id'];
         $verify_res = file_get_contents($url_verify);
         file_put_contents('888888888.txt',$verify_res);
+        file_put_contents('666666666.txt',json_encode($_POST));
 
 
         if($verify_res == 'true'){
