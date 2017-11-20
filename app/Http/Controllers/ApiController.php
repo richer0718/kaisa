@@ -129,6 +129,7 @@ class ApiController extends Controller
 
 
         //看下他投没投过这期
+        /*
         $is_pay = DB::table('touzhu') -> where([
             'number' => $open_number_id,
             'openid' => $openid
@@ -137,6 +138,7 @@ class ApiController extends Controller
             //如果投过，返回他的余额
 
         }
+        */
 
 
 
@@ -989,6 +991,14 @@ class ApiController extends Controller
                 'openid' => $openid
             ]) -> get();
             if($logs){
+                //查找每期的期数
+                foreach($logs as $k => $vo){
+                    $temp = Cache::get('open_number_'.$vo -> number);
+                    if($temp){
+                        $logs[$k] -> qishu = $temp['open_id'];
+                    }
+
+                }
                 return response() -> json($logs);
             }else{
                 return response() -> json(['openid'=>'error']);
