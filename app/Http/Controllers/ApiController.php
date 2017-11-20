@@ -300,22 +300,20 @@ class ApiController extends Controller
 
         $url_verify = 'https://mapi.alipay.com/gateway.do?service=notify_verify&partner=2088621908302474&notify_id='.$_POST['notify_id'];
         $verify_res = file_get_contents($url_verify);
-        file_put_contents('888888888.txt',$verify_res);
+        //var_dump($verify_res);exit;
 
-        file_put_contents('55555.txt',json_encode($_POST));
 
-        if($verify_res){
+        if($verify_res == 'true'){
             //验签完毕
             $order_id = $_POST['out_trade_no'];
             $price = $_POST['price'];
             //查找buy_log
-            $log = DB::table('buy_log') -> where([
+            $log = DB::table('buylog') -> where([
                 'order_id' => $order_id
             ]) -> first();
             if($log){
-                file_put_contents('111111.txt',json_encode($_POST));
                 //更改is_pay
-                DB::table('buy_log') -> where([
+                DB::table('buylog') -> where([
                     'order_id' => $order_id
                 ]) -> update([
                     'is_pay' => 1,
