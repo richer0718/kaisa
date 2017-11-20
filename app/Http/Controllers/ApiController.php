@@ -300,56 +300,39 @@ class ApiController extends Controller
 
         $url_verify = 'https://mapi.alipay.com/gateway.do?service=notify_verify&partner=2088621908302474&notify_id='.$_POST['notify_id'];
         $verify_res = file_get_contents($url_verify);
-        file_put_contents('9999999999999.txt',$verify_res);exit;
+        file_put_contents('888888888.txt',$verify_res);
 
 
-
-        $url = 'http://m.jhqck.com/al/order/verifySign';
-        $post_data = [
-            'signContent' => json_encode($_POST,JSON_UNESCAPED_SLASHES),
-        ];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // post数据
-        curl_setopt($ch, CURLOPT_POST, 1);
-        // post的变量
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-
-        $output = curl_exec($ch);
-        curl_close($ch);
-        file_put_contents('99000.txt',$output);
-        //打印获得的数据
-        //print_r($output);exit;
-
-        echo 'success';exit;
-        //验签完毕
-        $order_id = $_POST['out_trade_no'];
-        $price = $_POST['price'];
-        //查找buy_log
-        $log = DB::table('buy_log') -> where([
-            'order_id' => $order_id
-        ]) -> first();
-        if($log){
-            //更改is_pay
-            DB::table('buy_log') -> where([
+        if($verify_res == 'true'){
+            //验签完毕
+            $order_id = $_POST['out_trade_no'];
+            $price = $_POST['price'];
+            //查找buy_log
+            $log = DB::table('buy_log') -> where([
                 'order_id' => $order_id
-            ]) -> update([
-                'is_pay' => 1,
-                'updated_at' => time()
-            ]);
-            //user 加余额
-            $user_info = DB::table('user') -> where([
-                'openid' => $log -> openid
             ]) -> first();
-            DB::table('user') -> where([
-                'openid' => $log -> openid
-            ]) -> update([
-                'point' => $user_info -> point +$price
-            ]);
-            echo 'success';
+            if($log){
+                //更改is_pay
+                DB::table('buy_log') -> where([
+                    'order_id' => $order_id
+                ]) -> update([
+                    'is_pay' => 1,
+                    'updated_at' => time()
+                ]);
+                //user 加余额
+                $user_info = DB::table('user') -> where([
+                    'openid' => $log -> openid
+                ]) -> first();
+                DB::table('user') -> where([
+                    'openid' => $log -> openid
+                ]) -> update([
+                    'point' => $user_info -> point +$price
+                ]);
+                echo 'success';
 
+            }
         }
+
 
 
 
