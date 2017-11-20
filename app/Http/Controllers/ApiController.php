@@ -723,7 +723,7 @@ class ApiController extends Controller
             'created_at' => time()
         ]);
 
-        echo $sign;
+        return response() -> json($sign);
         //在user表中加入记录
         /*
         DB::table('user') -> where([
@@ -779,7 +779,8 @@ class ApiController extends Controller
         header('Access-Control-Allow-Origin:*');
         $openid = $request -> input('openid');
         $data = DB::table('buylog') -> where([
-            'openid' => $openid
+            'openid' => $openid,
+            'is_pay' => 1
         ]) -> orderBy('id','desc') -> get();
         return response() -> json($data);
     }
@@ -960,7 +961,8 @@ class ApiController extends Controller
         $openid = $request -> input('openid');
         if($openid){
             $logs = DB::table('buylog') -> where([
-                'openid' => $openid
+                'openid' => $openid,
+                'is_pay' => 1
             ]) -> get();
             if($logs){
                 return response() -> json($logs);
