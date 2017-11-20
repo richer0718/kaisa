@@ -294,12 +294,18 @@ class ApiController extends Controller
 
         //var_dump(json_encode($temp));exit;
 
-        file_put_contents(public_path().'ttttsss.txt',$_POST['sign']);exit;
+        file_put_contents(public_path().'ttttsss.txt',json_encode($_POST));exit;
         //header('Access-Control-Allow-Origin:*');
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
         //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
 
+        $url = 'http://m.jhqck.com/al/order/verifySign?signContent='.json_encode($_POST);
+        var_dump($url);exit;
+        $res = file_get_contents($url);
+
+
+        /*
         $url = 'http://m.jhqck.com/al/order/sign';
         $post_data = [
             'signContent' => json_encode($_POST),
@@ -317,6 +323,7 @@ class ApiController extends Controller
 
         //打印获得的数据
         //print_r($output);
+        */
 
         //验签完毕
         $order_id = $_POST['out_trade_no'];
