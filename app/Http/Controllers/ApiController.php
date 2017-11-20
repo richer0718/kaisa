@@ -304,7 +304,7 @@ class ApiController extends Controller
 
         file_put_contents('55555.txt',json_encode($_POST));
 
-        if($verify_res == 'true'){
+        if($verify_res == true){
             //验签完毕
             $order_id = $_POST['out_trade_no'];
             $price = $_POST['price'];
