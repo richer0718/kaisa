@@ -32,7 +32,7 @@ Route::group(['prefix' => 'api'], function () {
     //下注
     Route::any('/buyNumber', 'ApiController@buyNumber');
     //充值
-    Route::any('/recharge', 'ApiController@recharge');
+    Route::any('/aliPay', 'ApiController@aliPay');
     //计算
     Route::any('/jisuan/{number}', 'ApiController@jisuan');
     //开奖
@@ -48,9 +48,9 @@ Route::group(['prefix' => 'api'], function () {
     //佣金记录
     Route::any('/yongjinLog', 'ApiController@yongjinLog');
     //阿里支付请求
-    Route::any('/alipay','ApiController@notify');
+    Route::any('/notify','ApiController@notify');
 
-    Route::any('/alipay_notify','ApiController@notify');
+    //Route::any('/alipay_notify','ApiController@notify');
     Route::any('/return_req','ApiController@return_req');
     //结账
     Route::any('/countOrder','ApiController@countOrder');

@@ -281,9 +281,32 @@ class ApiController extends Controller
 
 
     public function notify(Request $request){
+        header('Access-Control-Allow-Origin:*');
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
-        include app_path().'/AliPay/notify_url.php';
+        //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
+
+        $url = 'http://m.jhqck.com/al/order/sign';
+        $post_data = array ([
+            'total_fee' => 0.01,
+            'out_trade_no' => 27389472384238
+        ]);
+        var_dump(11);exit;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // post数据
+        curl_setopt($ch, CURLOPT_POST, 1);
+        // post的变量
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        //打印获得的数据
+        print_r($output);
+
+
 
     }
 
@@ -669,13 +692,8 @@ class ApiController extends Controller
         }
     }
 
-    //返回userinfo
-    public function getUserInfo($openid){
-
-    }
-
-    //充值
-    public function recharge(Request $request){
+    //阿里支付
+    public function aliPay(Request $request){
         header('Access-Control-Allow-Origin:*');
         //生成订单
 
@@ -740,6 +758,40 @@ class ApiController extends Controller
         */
 
         //return response() -> json(['point'=>$userinfo -> point]);
+    }
+
+    //充值
+    public function recharge(Request $request){
+        header('Access-Control-Allow-Origin:*');
+        //生成订单
+        $openid = $request -> input('openid');
+        $price = $request -> input('price');
+        //看下多少钱可以买多少点
+        $point = $price;
+        //在user表中加入记录
+        $userinfo = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+        DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> update([
+            'point' => $userinfo -> point + $point
+        ]);
+
+        DB::table('buylog') -> insert([
+            'openid' => $openid,
+            'is_pay' => 1,
+            'point' => $point,
+            'created_at' => time()
+        ]);
+
+        //返回最终点数
+        $userinfo = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+
+
+        return response() -> json(['point'=>$userinfo -> point]);
     }
 
 
