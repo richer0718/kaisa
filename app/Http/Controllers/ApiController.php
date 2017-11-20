@@ -289,7 +289,8 @@ class ApiController extends Controller
 
 
     public function notify(Request $request){
-        file_put_contents('ttttsss.txt',json_encode($_POST));
+
+        file_put_contents(public_path().'ttttsss.txt',$_POST['sign']);exit;
         //header('Access-Control-Allow-Origin:*');
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
         //include app_path().'/AliPay/notify_url.php';
