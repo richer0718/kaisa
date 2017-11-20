@@ -289,6 +289,10 @@ class ApiController extends Controller
 
 
     public function notify(Request $request){
+        header('Access-Control-Allow-Origin:*');
+        //$temp = json_decode('{"discount":"0.00","payment_type":"1","trade_no":"2017112021001104040253319949","subject":"\u51ef\u6492\u7535\u5b50","buyer_email":"187****4202","gmt_create":"2017-11-20 22:36:21","notify_type":"trade_status_sync","quantity":"1","out_trade_no":"2017112046364","seller_id":"2088621908302474","notify_time":"2017-11-20 22:36:23","body":"\u51ef\u6492\u7535\u5b50","trade_status":"TRADE_SUCCESS","is_total_fee_adjust":"N","total_fee":"0.01","gmt_payment":"2017-11-20 22:36:22","seller_email":"jinhaoqck@163.com","price":"0.01","buyer_id":"2088802485328042","notify_id":"68ce8a0e90643990704d502c2378e57gb6","use_coupon":"N","sign_type":"RSA","sign":"dg306Nn1\/XKiQ\/OkcS9sBCsN++f0dI8adyLDh17dVp6EKC+h4ut4BdnDhO9CJC0ooxsYqBmskwWPMx+0iflS6cXHEfsTtUhITn5bVl5FpmvLZJoFS5xhBHxz9tcfA3FF\/TsUkgvZbm\/yWBqjTVrDwD5QawSk\/XAfBnb1URfsdff="}',true);
+
+        //var_dump(json_encode($temp));exit;
 
         file_put_contents(public_path().'ttttsss.txt',$_POST['sign']);exit;
         //header('Access-Control-Allow-Origin:*');
@@ -298,8 +302,7 @@ class ApiController extends Controller
 
         $url = 'http://m.jhqck.com/al/order/sign';
         $post_data = [
-            'total_fee' => 1,
-            'out_trade_no' => 6877976896
+            'signContent' => json_encode($_POST),
         ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -313,7 +316,7 @@ class ApiController extends Controller
         curl_close($ch);
 
         //打印获得的数据
-        print_r($output);
+        //print_r($output);
 
         //验签完毕
         $order_id = $_POST['out_trade_no'];
