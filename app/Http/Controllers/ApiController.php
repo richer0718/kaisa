@@ -320,7 +320,7 @@ class ApiController extends Controller
         //打印获得的数据
         //print_r($output);exit;
 
-
+        echo 'success';exit;
         //验签完毕
         $order_id = $_POST['out_trade_no'];
         $price = $_POST['price'];
