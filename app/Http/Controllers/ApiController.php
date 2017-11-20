@@ -269,7 +269,7 @@ class ApiController extends Controller
 
 
 
-            return response() -> json(['status'=>'success']);
+            return response() -> json(['status'=>'success','point'=>$userinfo -> point - $point]);
 
 
         }else{
