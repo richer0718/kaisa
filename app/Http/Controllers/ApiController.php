@@ -298,7 +298,9 @@ class ApiController extends Controller
         //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
 
-        file_put_contents('99999.txt',json_encode($_POST,JSON_UNESCAPED_SLASHES));
+        $url_verify = 'https://mapi.alipay.com/gateway.do?service=notify_verify&partner=2088621908302474&notify_id='.$_POST['notify_id'];
+        $verify_res = file_get_contents($url_verify);
+        file_put_contents('9999999999999.txt',$verify_res);exit;
 
 
 
