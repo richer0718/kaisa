@@ -23,7 +23,7 @@ $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyNotify();
 
 if($verify_result) {//验证成功
-    file_put_contents('success.txt',json_encode($_POST));
+    file_put_contents('success.txt',json_encode($_POST) );
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//请在这里加上商户的业务逻辑程序代
 
