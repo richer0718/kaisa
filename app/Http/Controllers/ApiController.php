@@ -297,7 +297,7 @@ class ApiController extends Controller
         //var_dump(app_path().'/AliPay/alipay.config.php');exit;
         //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
-
+        file_put_contents(public_path().'/testet.txt',json_encode($_POST));
 
 
 
