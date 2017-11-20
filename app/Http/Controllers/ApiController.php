@@ -995,8 +995,18 @@ class ApiController extends Controller
                 foreach($logs as $k => $vo){
                     $temp = Cache::get('open_number_'.$vo -> number);
                     if($temp){
-                        $logs[$k] -> qishu = $temp['open_id'];
+                        $logs[$k] -> qishu = $temp['prize_number'];
+                    }else{
+                        $temp = DB::table('openprize') -> where([
+                            'id' => $vo -> number
+                        ]) -> first();
+                        if($temp){
+                            $logs[$k] -> qishu = $temp -> prize_number;
+                        }else{
+                            $logs[$k] -> qishu = 'error';
+                        }
                     }
+                    $temp = '';
 
                 }
                 return response() -> json($logs);
