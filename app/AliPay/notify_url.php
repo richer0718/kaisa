@@ -17,13 +17,13 @@
 
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
-
+file_put_contents('success.txt',json_encode($_POST) );
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyNotify();
 
 if($verify_result) {//验证成功
-    file_put_contents('success.txt',json_encode($_POST) );
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//请在这里加上商户的业务逻辑程序代
 
