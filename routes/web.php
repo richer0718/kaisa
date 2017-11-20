@@ -36,6 +36,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/buyNumber', 'ApiController@buyNumber');
     //充值
     Route::any('/aliPay', 'ApiController@aliPay');
+    //阿里回调
+    Route::any('/alipay', 'ApiController@notify');
     //计算
     Route::any('/jisuan/{number}', 'ApiController@jisuan');
     //开奖
