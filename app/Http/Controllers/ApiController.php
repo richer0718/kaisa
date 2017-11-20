@@ -298,14 +298,13 @@ class ApiController extends Controller
         //include app_path().'/AliPay/notify_url.php';
         //dd($alipay_config);
 
-        file_put_contents('8989888.txt',json_encode($_POST));
+        file_put_contents('99999.txt',json_encode($_POST,JSON_UNESCAPED_SLASHES));
 
 
 
         $url = 'http://m.jhqck.com/al/order/verifySign';
-        $_POST['sign'] = urlencode($_POST['sign']);
         $post_data = [
-            'signContent' => json_encode($_POST),
+            'signContent' => json_encode($_POST,JSON_UNESCAPED_SLASHES),
         ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -317,7 +316,7 @@ class ApiController extends Controller
 
         $output = curl_exec($ch);
         curl_close($ch);
-        file_put_contents('888888.txt',$output);
+        file_put_contents('99000.txt',$output);
         //打印获得的数据
         //print_r($output);exit;
 
