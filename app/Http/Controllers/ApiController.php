@@ -303,6 +303,7 @@ class ApiController extends Controller
 
 
         $url = 'http://m.jhqck.com/al/order/verifySign';
+        $_POST['sign'] = urlencode($_POST['sign']);
         $post_data = [
             'signContent' => json_encode($_POST),
         ];
