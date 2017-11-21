@@ -405,7 +405,8 @@ class ApiController extends Controller
 
     //计算投注结果
     //返回三位数字
-    public function jisuan($open_number_id){
+    public function jisuan($open_number_id = 11788){
+        //echo 11;exit;
         //去touzhu表中查，这期的投注
         $result = DB::table('touzhu') -> where(function($query) use($open_number_id){
             $query -> where('number','=',$open_number_id);
@@ -413,7 +414,7 @@ class ApiController extends Controller
             $query -> where('buy_option','!=',2);
             $query -> where('buy_option','!=',3);
         }) -> get();
-        //dd($result);
+        //var_dump($result);
         $options = config('kaisa.options');
         //dd($options);
         $numbers = [
@@ -430,13 +431,13 @@ class ApiController extends Controller
         ];
         if($result){
             foreach($result as $vo){
-                //dd($vo);
+                //dump($vo);
                 //查下此option所包含的number
                 $temp = $vo->buy_option;
                 $option = $options[$temp];
                 //dd($option['number']);
                 //没有考虑 合 的情况
-
+                //dump($option['number']);
                 if($option['number']){
                     //每个number + 投的点数
                     //此数组里边的值，每个都加point
@@ -447,6 +448,8 @@ class ApiController extends Controller
 
             }
         }
+
+        //echo 'end';exit;
 
 
         if($result){
@@ -1183,7 +1186,7 @@ class ApiController extends Controller
                     ]) -> update([
                         'point' => $isset -> point + $point
                     ]);
-                    return response() -> json(['status'=>'success']);
+                    return response() -> json(['status'=>'success','point'=>$userinfo -> point - $point]);
 
 
 
