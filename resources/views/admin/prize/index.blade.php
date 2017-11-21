@@ -35,8 +35,8 @@
                             <td>{{$vo -> prize_number }}</td>
                             <td>{{$vo -> open_number }}</td>
                             <td>@if($vo -> is_open == 1)已开奖@else未开奖@endif</td>
-                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_buy }}@else0@endif</td>
-                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_cut }}@else0@endif</td>
+                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_buy }}@else 0 @endif</td>
+                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_cut }}@else 0 @endif</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
                             <td>{{ $vo -> point }}</td>
                         </tr>
