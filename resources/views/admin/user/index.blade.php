@@ -75,7 +75,7 @@
                 <tfoot>
                     <tr>
 
-                        <td colspan="6">{{ $res -> links() }}</td>
+                        <td colspan="7">{{ $res -> links() }}</td>
                     </tr>
                 </tfoot>
                 @endif
