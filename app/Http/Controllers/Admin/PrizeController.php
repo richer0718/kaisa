@@ -28,6 +28,7 @@ class PrizeController extends Controller
 
 
         }
+        dd($res);
         return view('admin/prize/index') -> with([
             'res' => $res
         ]);
