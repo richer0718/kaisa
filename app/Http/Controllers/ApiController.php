@@ -214,6 +214,9 @@ class ApiController extends Controller
             'id' => $id,
             'create_time' => time()
         ]);
+
+        //结账  算下这期赚了多少。
+
         //echo 'success';
     }
 
@@ -627,6 +630,8 @@ class ApiController extends Controller
         ]) -> get();
         //给每个人开奖
         if($touzhus){
+            //所有的投注点数
+            $point_all = 0;
             $buy_plus = [];
             $buy_ext = [];
             foreach($touzhus as $key => $vo){
@@ -654,28 +659,43 @@ class ApiController extends Controller
                         $buy_ext[$key]['point'] = $temp_point;
                     }
 
+                    //加一下 所有的投注点数
+                    $point_all += $temp_point;
+
+
+
                 }else{
                     continue;
                 }
             }
 
-
+            $point_cut =0;
             //该加的加上
             foreach($buy_plus as $vo){
                 //开始处理
                 DB::table('user') -> where([
                     'openid' => $vo['openid']
                 ]) -> increment('point',$vo['point']);
-                //输赢记录
+                //加了的 就是赔的
+                $point_cut += $vo['point'];
             }
 
+            //更新到交易表中
+            DB::table('tradelog') -> insert([
+
+            ]);
+
+
             //该扣的扣掉
+            //扣的 就是挣的
+            /*
             foreach($buy_ext as $vo){
                 DB::table('user') -> where([
                     'openid' => $vo['openid']
                 ]) -> decrement('point',$vo['point']);
                 //输赢记录
             }
+            */
 
 
 
