@@ -19,6 +19,8 @@
                     <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >开奖期数</span></th>
                     <th><span class="glyphicon glyphicon-signal"></span> <span class="visible-lg">开奖号码</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">是否开奖</span></th>
+                    <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">购买点数</span></th>
+                    <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">发放点数</span></th>
 
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">创建时间</span></th>
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">投注点数</span></th>
@@ -33,6 +35,8 @@
                             <td>{{$vo -> prize_number }}</td>
                             <td>{{$vo -> open_number }}</td>
                             <td>@if($vo -> is_open == 1)已开奖@else未开奖@endif</td>
+                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_buy }}@else0@endif</td>
+                            <td>@if($vo -> shouru){{ $vo -> shouru -> point_cut }}@else0@endif</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
                             <td>{{ $vo -> point }}</td>
                         </tr>

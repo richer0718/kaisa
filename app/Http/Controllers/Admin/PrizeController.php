@@ -21,6 +21,11 @@ class PrizeController extends Controller
             $res[$k] ->  point = DB::table('touzhu') -> where([
                 'number' => $vo -> id
             ]) -> sum('point');
+            //盈利情况
+            $res[$k] ->  shouru = DB::table('tradelog') -> where([
+                'qishu_id' => $vo -> id
+            ]) -> first();
+
 
         }
         return view('admin/prize/index') -> with([
