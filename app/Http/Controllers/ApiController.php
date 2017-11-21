@@ -416,7 +416,7 @@ class ApiController extends Controller
         }) -> get();
         //var_dump($result);
         $options = config('kaisa.options');
-        //dd($options);
+        //dump($options);
         $numbers = [
             0=>0,
             1=>0,
@@ -430,6 +430,7 @@ class ApiController extends Controller
             9=>0,
         ];
         if($result){
+            //dump($result);
             foreach($result as $vo){
                 //dump($vo);
                 //查下此option所包含的number
@@ -685,7 +686,10 @@ class ApiController extends Controller
 
             //更新到交易表中
             DB::table('tradelog') -> insert([
-
+                'qishu_id' => $id,
+                'point_buy' => $point_all,
+                'point_cut' => $point_cut,
+                'created_at' => time()
             ]);
 
 
