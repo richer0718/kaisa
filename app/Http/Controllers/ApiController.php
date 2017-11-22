@@ -1258,7 +1258,7 @@ class ApiController extends Controller
             return response() -> json(['status'=>'error']);
         }
 
-        
+
 
         $api = new \ChuanglanSmsApi();
         $mobile = $request -> input('mobile');
@@ -1268,7 +1268,7 @@ class ApiController extends Controller
         $res = $api -> sendSMS( $mobile, $msg);
         if($res){
             //存入缓存
-            Cache::put($request -> input('mobile'),$code,2);
+            Cache::set($request -> input('mobile'),$code,2);
             return response() -> json(['status'=>'success']);
         }
 
