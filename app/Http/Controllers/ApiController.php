@@ -1259,7 +1259,7 @@ class ApiController extends Controller
         }
 
         $is_set = !is_null(Cache::get($request -> input('mobile')));
-        if($is_set){
+        if(!$is_set){
             //代表重复获取
             return response() -> json(['status'=>'waiting']);
         }
@@ -1273,7 +1273,7 @@ class ApiController extends Controller
         if($res){
             //存入缓存
             Cache::put($request -> input('mobile'),$code,2);
-            return response() -> json(['status'=>'success','code'=>$code]);
+            return response() -> json(['status'=>'success']);
         }
 
     }
