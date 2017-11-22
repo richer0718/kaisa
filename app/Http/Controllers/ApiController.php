@@ -1261,7 +1261,7 @@ class ApiController extends Controller
         $is_set = is_null(Cache::get($request -> input('mobile')));
         if(!$is_set){
             //代表重复获取
-            return response() -> json(['status'=>'waiting','code',Cache::get($request -> input('mobile'))]);
+            return response() -> json(['status'=>'waiting']);
         }
 
         $api = new \ChuanglanSmsApi();
