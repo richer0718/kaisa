@@ -1268,7 +1268,7 @@ class ApiController extends Controller
         $res = $api -> sendSMS( $mobile, $msg);
         if($res){
             //存入缓存
-            Cache::add($request -> input('mobile'),$code,2);
+            Cache::put($request -> input('mobile'),$code,2);
             return response() -> json(['status'=>'success']);
         }
 
