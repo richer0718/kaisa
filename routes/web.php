@@ -17,6 +17,9 @@ Route::get('/', function () {
 Route::get('/test', 'Admin\TestController@index');
 Route::get('/getData', 'Admin\TestController@getData');
 
+Route::get('/downLoad/{code}', 'DownLoadController@index');
+
+
 //Api
 Route::group(['prefix' => 'api'], function () {
     //回调
@@ -39,7 +42,7 @@ Route::group(['prefix' => 'api'], function () {
     //阿里回调
     Route::any('/alipay', 'ApiController@notify');
     //计算
-    Route::any('/jisuan/{number}', 'ApiController@jisuan');
+    Route::any('/jisuan', 'ApiController@jisuan');
     //开奖
     Route::any('/openPrize/{number}', 'ApiController@openPrize');
     //开奖历史记录
@@ -67,6 +70,8 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::any('/getCode','ApiController@getCode');
     Route::any('/getUserList','ApiController@getUserList');
+
+    Route::any('/sendMessage','ApiController@sendMessage');
 
 
 
