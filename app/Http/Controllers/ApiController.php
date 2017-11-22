@@ -405,7 +405,7 @@ class ApiController extends Controller
 
     //计算投注结果
     //返回三位数字
-    public function jisuan($open_number_id = 11788){
+    public function jisuan($open_number_id = 16007){
         //echo 11;exit;
         //去touzhu表中查，这期的投注
         $result = DB::table('touzhu') -> where(function($query) use($open_number_id){
@@ -414,7 +414,7 @@ class ApiController extends Controller
             $query -> where('buy_option','!=',2);
             $query -> where('buy_option','!=',3);
         }) -> get();
-        //var_dump($result);
+
         $options = config('kaisa.options');
         //dump($options);
         $numbers = [
@@ -503,8 +503,8 @@ class ApiController extends Controller
 
             //拿下每个的赔率
             $res1 = intval($result1) * $options[1]['peilv'];
-            $res2 = intval($result1) * $options[2]['peilv'];
-            $res3 = intval($result1) * $options[3]['peilv'];
+            $res2 = intval($result2) * $options[2]['peilv'];
+            $res3 = intval($result3) * $options[3]['peilv'];
 
             if($end_number >= 5){
                 //大数字
@@ -529,6 +529,7 @@ class ApiController extends Controller
 
                 }
             }
+
 
 
         }else{
