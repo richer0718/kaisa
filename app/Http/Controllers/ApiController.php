@@ -901,10 +901,20 @@ class ApiController extends Controller
         $openid = trim($request -> input('openid'));
         $nickname = trim($request -> input('nickname'));
         $yaoqingma = trim($request -> input('code'));
+        $yanzhengma = trim($request -> input('yanzhengma'));
+
         //判断必填
         if(!$openid){
             return response() -> json([
                 'status' => 'must_error'
+            ]);
+        }
+
+        //查下验证码
+        $cache = Cache::get($openid);
+        if($cache != $yanzhengma){
+            return response() -> json([
+                'status' => 'yanzhengma_error'
             ]);
         }
 
@@ -1229,6 +1239,33 @@ class ApiController extends Controller
 
 
     public function payRequest(Request $request){
+
+    }
+
+    public function sendMessage(Request $request){
+        require (app_path() . '/Tools/ChuanglanSmsApi.php');
+        //判断是否存在
+        if(!$request -> input('mobile')){
+            return response() -> json(['status'=>'error']);
+        }
+
+        $is_set = Cache::get($request -> input('mobile'));
+        if($is_set){
+            //代表重复获取
+            return response() -> json(['status'=>'waiting']);
+        }
+
+        $api = new \ChuanglanSmsApi();
+        $mobile = $request -> input('mobile');
+        $code = mt_rand(100000,999999);
+
+        $msg = '【青青客】您的验证码是'.$code;
+        $res = $api -> sendSMS( $mobile, $msg);
+        if($res){
+            //存入缓存
+            Cache::put($request -> input('mobile'),$code,2);
+            return response() -> json(['status'=>'success','code'=>$code]);
+        }
 
     }
 
