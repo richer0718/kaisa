@@ -911,7 +911,16 @@ class ApiController extends Controller
         }
 
         //查下验证码
+        $isset = Cache::has($openid);
+        if(!$isset){
+            return response() -> json([
+                'status' => 'timeout'
+            ]);
+        }
+
+
         $cache = Cache::get($openid);
+        //var_dump($cache);exit;
         if($cache != $yanzhengma){
             return response() -> json([
                 'status' => 'yanzhengma_error'
@@ -1249,7 +1258,7 @@ class ApiController extends Controller
             return response() -> json(['status'=>'error']);
         }
 
-        $is_set = Cache::get($request -> input('mobile'));
+        $is_set = Cache::has($request -> input('mobile'));
         if($is_set){
             //代表重复获取
             return response() -> json(['status'=>'waiting']);
