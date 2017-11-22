@@ -20,8 +20,8 @@ class UserController extends Controller
             if(!empty($_POST['userid'])){
                 $query -> where('uid','=',$_POST['userid']);
             }
-            if(!empty($_POST['nickname'])){
-                $query -> where('nickname','like','%'.$_POST['nickname'].'%');
+            if(!empty($_POST['openid'])){
+                $query -> where('openid','like','%'.$_POST['openid'].'%');
             }
         })-> paginate(15);
         //dd($res);

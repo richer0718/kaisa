@@ -16,9 +16,9 @@
                         <input type="text" name="userid"  class="form-control" value="@if(!empty($_POST['userid'])){{ $_POST['userid'] }}@endif"/>
                     </td>
 
-                    <td>微信名称</td>
+                    <td>手机号码</td>
                     <td>
-                        <input type="text" name="nickname"  class="form-control" value="@if(!empty($_POST['nickname'])){{ $_POST['nickname'] }}@endif" />
+                        <input type="text" name="nickname"  class="form-control" value="@if(!empty($_POST['openid'])){{ $_POST['openid'] }}@endif" />
                     </td>
 
 
@@ -46,7 +46,7 @@
                 <thead>
                 <tr>
                     <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">用户ID</span></th>
-                    <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >微信名称</span></th>
+                    <th><span class="glyphicon glyphicon-user"></span> <span class="visible-lg" >手机号码</span></th>
                     <th><span class="glyphicon glyphicon-signal"></span> <span class="visible-lg">充值点数</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">邀请码</span></th>
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">提现验证码</span></th>
@@ -61,7 +61,7 @@
                     @foreach($res as $k => $vo)
                         <tr>
                             <td>{{ $vo -> uid}}</td>
-                            <td>{{$vo -> nickname }}</td>
+                            <td>{{$vo -> openid }}</td>
                             <td>{{$vo -> point }}</td>
                             <td>{{$vo -> code}}</td>
                             <td>{{$vo -> yanzhengma}}</td>
