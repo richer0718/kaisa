@@ -454,6 +454,7 @@ class ApiController extends Controller
 
 
         if($result){
+            $number_zero = [];
             //先看有没有0的 有 就开0
             foreach($numbers as $key => $value){
                 if($value == 0 && $key != 'he'){
