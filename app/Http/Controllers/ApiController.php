@@ -1258,11 +1258,11 @@ class ApiController extends Controller
             return response() -> json(['status'=>'error']);
         }
 
-        $is_set = Cache::has($request -> input('mobile'));
+        /*$is_set = Cache::has($request -> input('mobile'));
         if($is_set){
             //代表重复获取
             return response() -> json(['status'=>'waiting']);
-        }
+        }*/
 
         $api = new \ChuanglanSmsApi();
         $mobile = $request -> input('mobile');
