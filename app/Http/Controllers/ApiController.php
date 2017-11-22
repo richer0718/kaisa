@@ -911,8 +911,8 @@ class ApiController extends Controller
         }
 
         //查下验证码
-        $isset = Cache::has($openid);
-        if(!$isset){
+        $isset = is_null(Cache::get($openid));
+        if($isset){
             return response() -> json([
                 'status' => 'timeout'
             ]);
@@ -1258,11 +1258,11 @@ class ApiController extends Controller
             return response() -> json(['status'=>'error']);
         }
 
-        /*$is_set = Cache::has($request -> input('mobile'));
+        $is_set = !is_null($this->get($request -> input('mobile')));
         if($is_set){
             //代表重复获取
             return response() -> json(['status'=>'waiting']);
-        }*/
+        }
 
         $api = new \ChuanglanSmsApi();
         $mobile = $request -> input('mobile');
