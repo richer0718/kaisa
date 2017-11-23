@@ -8,6 +8,6 @@ class DownLoadController extends Controller
 {
     //
     public function index($code){
-        echo $code;
+        return view('download/index');
     }
 }
