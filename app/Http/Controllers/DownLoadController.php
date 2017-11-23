@@ -8,6 +8,8 @@ class DownLoadController extends Controller
 {
     //
     public function index($code){
-        return view('download/index');
+        return view('download/index') -> with([
+            'code' => $code
+        ]);
     }
 }

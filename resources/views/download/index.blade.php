@@ -21,33 +21,45 @@
 </head><body>
 
 
-<!--=== Breadcrumbs ===-->
-<div class="row-fluid breadcrumbs">
-    <div class="container">
-        <h1 class="pull-left">app名称</h1>
-        <ul class="pull-right breadcrumb">
-            <li>大小：50.94 MB</li>
-            <li>2017-09-30</li>
-        </ul>
-    </div><!--/container-->
-</div><!--/breadcrumbs-->
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-<style>
-    .sky-form section {margin-bottom: 20px;}
-    .tabbb_box input{height: 34px;border:none;border-bottom: 1px solid #e5e5e5;padding:0; font-size: 16px;}
-    .modal-footer{border-top: none;width: 100%;padding:3px;font-size: 22px; margin-bottom: 15px;padding: 0 20px;}
-    .modal-footer a{display: block;background-color: #268df7;text-align: center;color: #fff;border-radius: 28px;}
-    #sendcode88{border-radius: 18px;float: right;}
-    .form-group .font16{font-weight: bold;}
-    h4.modal-title{font-weight: bold;}
-    .font16{font-size: 16px;}
-    .message-p{margin:0;padding-top: 5px;}
-    .ios-border{border-left:1px solid #ccc;}
-    /* .modal-dialog{transition:width 1s;} */
-    .modal.fade .modal-dialog{transform: translate(0,0)}
+<!--App自定义的css-->
+<style type="text/css">
+    html,body{height: 100%;padding: 0;margin: 0;}
+    body{
+        background: url({{ asset('img/login/bg.png') }});
+        background-size:100% 100%;
+    }
+    .mui-content{background: none;}
+    .title {text-align: center;margin-top: 10%;}
+    .title img{width: 90%;}
+    .yaoqingma_bg{position: absolute;left: 0;bottom: 12%;
+        width: 100%;text-align: center;height:65%;
+        background: url({{ asset('img/login/ipt.png') }}) no-repeat ;
+        background-size:100% auto;z-index: 10;}
+    .yaoqingma{position: absolute;left: 0;bottom:5%;width:100%;height: 40%;}
+    .yaoqingma div{margin-bottom: 1rem}
+    .yaoqingma input{width: 50%;text-align: center;font-size: 0.75rem;height: 1.5rem;line-height: 1.5rem;padding: 0;}
+    .yaoqingma span{display:inline-block;width:50%;height:2rem;line-height: 2rem;border-radius:0.25rem; font-size: 0.75rem;background: #F2F2F2;
+    }
+
 </style>
+
+<div class="title">
+    <img src="{{ asset('img/login/title.png') }}"/>
+</div>
+<div class="yaoqingma_bg">
+    <div class="yaoqingma">
+        <div><input type="text" id="yaoqingma" readonly="readonly" value="{{ $code }}" /></div>
+        <div><span onclick="">安卓版下载</span></div>
+        <div><span onclick="">苹果版版下载</span></div>
+    </div>
+    <!--<div class="yaoqingma"></div> -->
+</div>
+
+
+
 <script language="javascript">
     function isWeiXin(){
         var ua = navigator.userAgent.toLowerCase();
@@ -89,71 +101,7 @@
         }
     }
 </script>
-<div class="view row" id="" style="margin-top:30px;">
-    <div class="span12" style="text-align:center;">
-        <img class="img-rounded" height="118" src="http://www.nad1.top/yexiu//front/images/59cfa82aa7080.png" width="119" />
 
-    </div>
-</div>
-<!---->
-<hr class="devider devider-dotted" />
-<div class="container margin-bottom-30">
-    <div class="row">
-        <!--1-->
-        <div class="col-md-6 col-lg-6 ">
-            <div class="row text-center">
-                <div class="spinner" redata="1.00" style="padding-top:20px;">
-                    <div id="showtext"></div>
-                    <span id="checkinfo">
-                        						<span id="checkinfo">
-
-								<a class="btn-u btn-u-lg" href="http://yxoss.oss-cn-beijing.aliyuncs.com/public/yexiu.apk" id="ase"><i class="fa fa-download"></i> 点击安装</a>
-                                                    <!---->
-
-                                                    <!--<a onclick="gotoopenurl('/Appipa/downloading/id/1871.html')" class="btn-u btn-u-lg"><i class="fa fa-download"></i> 点击安装</a>-->
-                                                    <!---->
-						</span>                        </span>
-                </div>
-                <div class="span12" style="text-align:center;padding-top:10px;">
-                    <span class="label label-info">适用于Android设备</span>
-                    <span class="label label-danger">安卓</span>                    </div>
-                <!--<p class="message-p">版本：2.3.1 (build 2)</p>-->
-                <p class="message-p">大小：50.94 MB</p>
-            </div>
-        </div>
-        <!--2-->
-        <div class="ios-border">
-            <div class="row text-center">
-                <div class="spinner" redata="1.00" style="padding-top:20px;">
-                    <div id="showtext"></div>
-                    <span id="checkinfo">
-                        						<span id="checkinfo">
-
-								<!--<a href="http://www.hkg7.cn/a/Asq6O2" id="ase"  class="btn-u btn-u-lg"><i class="fa fa-download"></i> 点击安装</a>-->
-								<a class="btn-u btn-u-lg" href="http://jju5.net/a/Yvg4I" id="ase"><i class="fa fa-download"></i> 点击安装</a>
-                                                    <!---->
-
-                                                    <!--<a onclick="gotoopenurl('/Appipa/downloading/id/1871.html')" class="btn-u btn-u-lg"><i class="fa fa-download"></i> 点击安装</a>-->
-                                                    <!---->
-						</span></span>
-                </div>
-                <div class="span12" style="text-align:center;padding-top:10px;">
-                    <span class="label label-info">适用于iOS设备</span>
-                    <span class="label label-danger">苹果</span>
-                </div>
-                <!--<p class="message-p">版本：2.3.1 (build 2)</p>-->
-                <p class="message-p">大小：86.79 MB</p>
-            </div>
-        </div>
-        <!--结束-->
-    </div>
-</div>
-<hr class="devider devider-dotted" />
-<div class="view row margin-bottom-30" id="">
-    <div class="span12" style="text-align:center;">或者用手机扫描下面的二维码安装<br /><br />
-        <img height="116" src="http://www.nad1.top/yexiu//front/images/1871.png" width="117" />
-    </div>
-</div>
 <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 <div id="weixin" style="display: none">
     <div class="click_opacity"></div>
