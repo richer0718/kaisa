@@ -106,17 +106,17 @@
 <div id="weixin" style="display: none">
     <div class="click_opacity"></div>
     <div class="to_btn">
-        <span class="span1"><img src="http://www.nad1.top/yexiu//front/images/click_btn.png" /></span>
-        <span class="span2"><em>1</em> 点击右上角<img src="http://www.nad1.top/yexiu//front/images/menu.png" />打开菜单</span>
-        <span class="span2"><em>2</em> 选择<img src="http://www.nad1.top/yexiu//front/images/safari.png" />用Safari打开下载</span>
+        <span class="span1"><img src="{{ asset('img/page/click_btn.png') }}" /></span>
+        <span class="span2"><em>1</em> 点击右上角<img src="{{ asset('img/page/menu.png') }}" />打开菜单</span>
+        <span class="span2"><em>2</em> 选择<img src="{{ asset('img/page/safari.png') }}" />用Safari打开下载</span>
     </div>
 </div>
 <div id="weixin_an" style="display: none">
     <div class="click_opacity"></div>
     <div class="to_btn">
-        <span class="span1"><img src="http://www.nad1.top/yexiu//front/images/click_btn.png" /></span>
-        <span class="span2"><em>1</em> 点击右上角<img src="http://www.nad1.top/yexiu//front/images/menu_android.png" />打开菜单</span>
-        <span class="span2 android_open"><em>2</em> 选择<img src="http://www.nad1.top/yexiu//front/images/android.png" /></span>
+        <span class="span1"><img src="{{ asset('img/page/click_btn.png') }}" /></span>
+        <span class="span2"><em>1</em> 点击右上角<img src="{{ asset('img/page/menu_android.png') }}" />打开菜单</span>
+        <span class="span2 android_open"><em>2</em> 选择<img src="{{ asset('img/page/android.png') }}" /></span>
     </div>
 </div>
 <script src="{{ asset('js/slick.min.js') }}" type="text/javascript"></script>
