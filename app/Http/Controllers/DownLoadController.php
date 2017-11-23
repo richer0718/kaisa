@@ -12,4 +12,9 @@ class DownLoadController extends Controller
             'code' => $code
         ]);
     }
+
+    public function android(){
+        $file = public_path().'/apk/kaisa.apk';
+        return response()->download($file,'kaisa.apk');
+    }
 }

@@ -18,6 +18,7 @@ Route::get('/test', 'Admin\TestController@index');
 Route::get('/getData', 'Admin\TestController@getData');
 
 Route::get('/downLoad/{code}', 'DownLoadController@index');
+Route::get('/downLoadandroid', 'DownLoadController@android');
 
 
 //Api

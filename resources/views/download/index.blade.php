@@ -52,7 +52,7 @@
 <div class="yaoqingma_bg">
     <div class="yaoqingma">
         <div><input type="text" id="yaoqingma" readonly="readonly" value="{{ $code }}" /></div>
-        <div><span onclick="">安卓版下载</span></div>
+        <div><span onclick="download_android()">安卓版下载</span></div>
         <div><span onclick="">苹果版版下载</span></div>
     </div>
     <!--<div class="yaoqingma"></div> -->
@@ -61,6 +61,10 @@
 
 
 <script language="javascript">
+    function download_android(){
+        //下载安卓
+        window.location.href="{{ url('downLoadandroid') }}";
+    }
     function isWeiXin(){
         var ua = navigator.userAgent.toLowerCase();
         if(ua.match(/MicroMessenger/i)=="micromessenger") {
