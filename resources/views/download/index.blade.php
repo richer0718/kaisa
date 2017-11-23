@@ -7,11 +7,11 @@
 
     <meta content="" name="description" />
     <!-- CSS Global Compulsory-->
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />`
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="./css/css.css" />
-    <link rel="stylesheet" href="./css/font-awesome.min.css" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />`
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/css.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" />
 <!--<link rel="stylesheet" th:href="@{${application.approot}+'/front./css/bootstrap.min.css'}">-->
 
     <!--[if lt IE 10]>
@@ -31,8 +31,8 @@
         </ul>
     </div><!--/container-->
 </div><!--/breadcrumbs-->
-<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 <style>
     .sky-form section {margin-bottom: 20px;}
@@ -154,7 +154,7 @@
         <img height="116" src="http://www.nad1.top/yexiu//front/images/1871.png" width="117" />
     </div>
 </div>
-<link rel="stylesheet" href="./css/app.css" />
+<link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 <div id="weixin" style="display: none">
     <div class="click_opacity"></div>
     <div class="to_btn">
@@ -171,10 +171,10 @@
         <span class="span2 android_open"><em>2</em> 选择<img src="http://www.nad1.top/yexiu//front/images/android.png" /></span>
     </div>
 </div>
-<script src="./js/slick.min.js" type="text/javascript"></script>
-<script src="./js/waypoints.min.js" type="text/javascript"></script>
-<script src="./js/jquery.themepunch.revolution.min.js" type="text/javascript"></script>
-<script src="./js/moban.js" type="text/javascript"></script>
+<script src="{{ asset('js/slick.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/waypoints.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.themepunch.revolution.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/moban.js') }}" type="text/javascript"></script>
 
 
 
