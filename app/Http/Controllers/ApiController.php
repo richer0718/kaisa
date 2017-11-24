@@ -306,7 +306,7 @@ class ApiController extends Controller
         //var_dump($verify_res);exit;
 
 
-        if($verify_res == 'true'){
+        if($verify_res == 'true' && $_POST['trade_status'] == 'TRADE_SUCCESS'){
             //验签完毕
             $order_id = $_POST['out_trade_no'];
             $price = $_POST['price'];
