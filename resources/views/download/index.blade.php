@@ -51,9 +51,9 @@
 </div>
 <div class="yaoqingma_bg">
     <div class="yaoqingma">
-        <div><input type="text" id="yaoqingma" readonly="readonly" value="{{ $code }}" /></div>
-        <div><span onclick="download_android()">安卓版下载</span></div>
-        <div><span onclick="download_ios()">苹果版版下载</span></div>
+        <div><input type="text" id="yaoqingma" readonly="readonly" value="{{ $code }}"style="height:2.5rem;line-height:2.5rem;" /></div>
+        <div><span onclick="download_android()" style="height:2.5rem;line-height:2.5rem;">安卓版下载</span></div>
+        <div><span onclick="download_ios()" style="height:2.5rem;line-height:2.5rem;" >苹果版版下载</span></div>
     </div>
     <!--<div class="yaoqingma"></div> -->
 </div>
