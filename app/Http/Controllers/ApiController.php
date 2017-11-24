@@ -1268,13 +1268,20 @@ class ApiController extends Controller
         $msg = '【青青客】您的验证码是'.$code;
         $res = $api -> sendSMS( $mobile, $msg);
         if($res){
-            //存入缓存
-            Cache::put($request -> input('mobile'),$code,2);
-            return response() -> json(['status'=>'success']);
+            $result = $api -> execResult($res);
+            if($result){
+                //存入缓存
+                Cache::put($request -> input('mobile'),$code,2);
+                return response() -> json(['status'=>'success']);
+            }else{
+                return response() -> json(['status'=>'error']);
+            }
+
+        }else{
+            return response() -> json(['status'=>'error']);
         }
 
     }
-
 
 
 
