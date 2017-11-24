@@ -66,7 +66,7 @@
         window.location.href="{{ url('downLoadandroid') }}";
     }
 
-    function download_android(){
+    function download_ios(){
         //下载安卓
         window.location.href="{{ url('downLoadios') }}";
     }
