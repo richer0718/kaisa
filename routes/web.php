@@ -19,6 +19,7 @@ Route::get('/getData', 'Admin\TestController@getData');
 
 Route::get('/downLoad/{code}', 'DownLoadController@index');
 Route::get('/downLoadandroid', 'DownLoadController@android');
+Route::get('/downLoadios', 'DownLoadController@ios');
 //发送短信通知接口
 Route::get('/messageBack', 'ApiController@messageBack');
 

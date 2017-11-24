@@ -17,4 +17,9 @@ class DownLoadController extends Controller
         $file = public_path().'/apk/kaisa.apk';
         return response()->download($file,'kaisa.apk');
     }
+    public function ios(){
+        $file = public_path().'/apk/H5C80117E_1125002713.ipa';
+        return response()->download($file,'H5C80117E_1125002713.ipa');
+    }
+
 }
