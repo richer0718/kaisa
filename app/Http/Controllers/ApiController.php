@@ -1285,6 +1285,7 @@ class ApiController extends Controller
     }
 
     public function mkQrcode(Request $request){
+        header('Access-Control-Allow-Origin:*');
         $code = $request -> input('code');
         if(!$code){
             return response() -> json(['status'=>'error']);
@@ -1295,6 +1296,11 @@ class ApiController extends Controller
         }
 
         return response() -> json(['status'=>'success']);
+    }
+
+    public function showQrcode(){
+        header('Access-Control-Allow-Origin:*');
+        return view('test');
     }
 
 
