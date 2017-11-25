@@ -16,7 +16,7 @@ class CheckLogin
     public function handle($request, Closure $next)
     {
         if(!session('admin_username')){
-            return redirect('admin/login');
+            return redirect('kaisaadmin/login');
         }
         return $next($request);
     }

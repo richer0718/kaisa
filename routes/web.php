@@ -77,6 +77,7 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::any('/sendMessage','ApiController@sendMessage');
     Route::any('/mkQrcode','ApiController@mkQrcode');
+    Route::any('/showQrcode','ApiController@showQrcode');
 
 
 
@@ -87,7 +88,7 @@ Route::group(['prefix' => 'api'], function () {
 
 //后台
 
-Route::get('/admin/login', 'Admin\IndexController@login');
+Route::get('/kaisaadmin/login', 'Admin\IndexController@login');
 Route::any('/admin/loginRes', 'Admin\IndexController@loginRes');
 Route::any('/admin/loginout', 'Admin\IndexController@loginout');
 
