@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ApiController extends Controller
 {
@@ -1281,6 +1282,19 @@ class ApiController extends Controller
             return response() -> json(['status'=>'error']);
         }
 
+    }
+
+    public function mkQrcode(Request $request){
+        $code = $request -> input('code');
+        if(!$code){
+            return response() -> json(['status'=>'error']);
+        }
+        if(!file_exists(public_path('qrcodes/'.$code.'.svg'))){
+            QrCode::generate('http://jhqck.com/kaisa/public/downLoad/'.$code, public_path('qrcodes/'.$code.'.svg'));
+            return response() -> json(['status'=>'success']);
+        }
+
+        return response() -> json(['status'=>'success']);
     }
 
 

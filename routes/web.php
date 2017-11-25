@@ -76,6 +76,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::any('/getUserList','ApiController@getUserList');
 
     Route::any('/sendMessage','ApiController@sendMessage');
+    Route::any('/mkQrcode','ApiController@mkQrcode');
 
 
 
