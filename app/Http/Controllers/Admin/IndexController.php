@@ -15,7 +15,7 @@ class IndexController extends Controller
     }
     public function loginout(Request $request){
         $request->session()->flush();
-        return redirect('admin/login');
+        return redirect('kaisaadmin/login');
     }
 
     public function loginRes(Request $request){
