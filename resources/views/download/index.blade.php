@@ -63,12 +63,12 @@
 <script language="javascript">
     function download_android(){
         //下载安卓
-        window.location.href="{{ url('downLoadandroid') }}";
+        window.location.href="{{ asset('apk/kaisa.apk') }}";
     }
 
     function download_ios(){
         //下载安卓
-        window.location.href="{{ url('downLoadios') }}";
+        //window.location.href="{{ url('downLoadios') }}";
     }
 
     function isWeiXin(){
