@@ -34,11 +34,11 @@
     .mui-content{background: none;}
     .title {text-align: center;margin-top: 10%;}
     .title img{width: 90%;}
-    .yaoqingma_bg{position: absolute;left: 0;bottom: 12%;
-        width: 100%;text-align: center;height:65%;
-        background: url({{ asset('img/login/ipt.png') }}) no-repeat ;
+    .yaoqingma_bg{position: absolute;left: 0;bottom: 8%;
+        width: 100%;text-align: center;height:70%;
+        background: url(img/login/ipt.png) no-repeat ;
         background-size:100% auto;z-index: 10;}
-    .yaoqingma{position: absolute;left: 0;bottom:5%;width:100%;height: 40%;}
+    .yaoqingma{position: absolute;left: 0;bottom:0;width:100%;height: 35%;}
     .yaoqingma div{margin-bottom: 1rem}
     .yaoqingma input{width: 50%;text-align: center;font-size: 0.75rem;height: 1.5rem;line-height: 1.5rem;padding: 0;}
     .yaoqingma span{display:inline-block;width:50%;height:2rem;line-height: 2rem;border-radius:0.25rem; font-size: 0.75rem;background: #F2F2F2;
