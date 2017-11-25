@@ -36,7 +36,7 @@
     .title img{width: 90%;}
     .yaoqingma_bg{position: absolute;left: 0;bottom: 8%;
         width: 100%;text-align: center;height:70%;
-        background: url(img/login/ipt.png) no-repeat ;
+        background: url({{ asset('img/login/ipt.png') }}) no-repeat ;
         background-size:100% auto;z-index: 10;}
     .yaoqingma{position: absolute;left: 0;bottom:0;width:100%;height: 35%;}
     .yaoqingma div{margin-bottom: 1rem}
