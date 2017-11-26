@@ -430,7 +430,7 @@ class ApiController extends Controller
             8=>0,
             9=>0,
         ];
-        if($result){
+        if(count($result)){
             //dump($result);
             foreach($result as $vo){
                 //dump($vo);
@@ -454,7 +454,7 @@ class ApiController extends Controller
         //echo 'end';exit;
 
 
-        if($result){
+        if(count($result)){
             $number_zero = [];
             //先看有没有0的 有 就开0
             foreach($numbers as $key => $value){
@@ -484,7 +484,7 @@ class ApiController extends Controller
 
         //从上边可以得出 数组场 精确场 开哪个数字发出的点数最少 $end_number
         //然后开始比较大小场 得到十位数字
-        if($result){
+        if(count($result)){
             //比较大小合买的，哪个少
             //买大
             $result1 = DB::table('touzhu') -> where(function($query) use($open_number_id){
@@ -504,9 +504,12 @@ class ApiController extends Controller
 
 
             //拿下每个的赔率
-            $res1 = intval($result1) * $options[1]['peilv'];
-            $res2 = intval($result2) * $options[2]['peilv'];
-            $res3 = intval($result3) * $options[3]['peilv'];
+            $res1 = intval($result1) * $options[1]['peilv']; //大
+            $res2 = intval($result2) * $options[2]['peilv']; //小
+            $res3 = intval($result3) * $options[3]['peilv']; //合
+
+
+
 
             if($end_number >= 5){
                 //大数字
