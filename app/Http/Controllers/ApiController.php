@@ -237,7 +237,10 @@ class ApiController extends Controller
         //投注点数
         $point = $request -> input('point');
         //投注期数id
-        $number = $request -> input('qishu');
+        //找最大期数
+        $number = DB::table('openprize') -> orderBy('id','desc') -> first()->id;
+        //var_dump($number);exit;
+        //$number = $request -> input('qishu');
 
         if($openid && $option && $point && $number){
 
