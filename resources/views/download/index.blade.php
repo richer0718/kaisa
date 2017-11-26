@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>官方APP下载</title>
+    <title>凯萨下载</title>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport" />
 
@@ -68,7 +68,7 @@
 
     function download_ios(){
         //下载安卓
-        //window.location.href="{{ url('downLoadios') }}";
+        window.location.href="https://fir.im/wlmh";
     }
 
     function isWeiXin(){
