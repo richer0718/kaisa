@@ -1262,15 +1262,33 @@ class ApiController extends Controller
 
 
 
+
+
         $api = new \ChuanglanSmsApi();
         $mobile = $request -> input('mobile');
         $code = mt_rand(100000,999999);
+
+        //先查下次验证码上次获取的记录
+        $info = DB::table('yanzhengma') -> orderBy('id','desc') -> where([
+            'mobile' => $mobile
+        ]) -> first();
+        if($info && time() - $info -> created_at < 60){
+            return response() -> json(['status'=>'error','time'=>'short']);
+        }
+
 
         $msg = '【青青客】您的验证码是'.$code;
         $res = $api -> sendSMS( $mobile, $msg);
         if($res){
             $result = $api -> execResult($res);
             if($result){
+                //获取成功 存入记录表
+                DB::table('yanzhengma') -> insert([
+                    'mobile' => $mobile,
+                    'code' => $code,
+                    'created_at' => time()
+                ]);
+
                 //存入缓存
                 Cache::put($request -> input('mobile'),$code,2);
                 return response() -> json(['status'=>'success']);
