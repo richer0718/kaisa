@@ -100,6 +100,7 @@ Route::group(['as' => 'user','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/user', 'Admin\UserController@index');
     Route::any('/admin/duihuan', 'Admin\UserController@duihuan');
     Route::any('/admin/userlog/{id}', 'Admin\UserController@userlog');
+    Route::any('/admin/chongzhi', 'Admin\UserController@chongzhi');
 });
 Route::group(['as' => 'prize','middleware' => ['checkadminlogin']], function () {
     Route::any('/admin/prize', 'Admin\PrizeController@index');

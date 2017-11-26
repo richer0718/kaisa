@@ -45,7 +45,12 @@
                         @foreach($chongzhi as $vo)
                     <tr>
                         <td >{{ date('Y-m-d H:i:s',$vo -> created_at) }}</td>
-                        <td><input type="text" value="{{ $vo -> point }}" class="form-control" disabled/></td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" value="{{ $vo -> point }}" class="form-control" disabled  />
+                                @if( $vo -> is_admin) <span class="input-group-addon">（后台充值）</span>@endif
+                            </div>
+                        </td>
                     </tr>
                         @endforeach
                     @endif

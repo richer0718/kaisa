@@ -96,4 +96,33 @@ class UserController extends Controller
         ]);
     }
 
+    public function chongzhi(Request $request){
+        $openid = $request -> input('chongzhi_openid');
+        $point = $request -> input('chongzhi_point');
+        //充值
+        DB::table('buylog') -> insert([
+            'openid' => $openid,
+            'price' => $point,
+            'point' => $point,
+            'created_at' => time(),
+            'updated_at' => time(),
+            'is_pay' => 1,
+            'is_admin' => 1,
+        ]);
+
+        //给他加上点
+        $userinfo = DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> first();
+        //给他加点
+        DB::table('user') -> where([
+            'openid' => $openid
+        ]) -> update([
+            'point' => $userinfo -> point + $point
+        ]);
+
+        return redirect('admin/user') -> with('chongzhi',$openid);
+
+    }
+
 }

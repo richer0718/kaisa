@@ -66,7 +66,7 @@
                             <td>{{$vo -> code}}</td>
                             <td>{{$vo -> yanzhengma}}</td>
                             <td>{{ date('Y-m-d H:i',$vo -> created_at) }}</td>
-                            <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a> <a href="{{ url('admin/userlog').'/'.$vo -> id }}">查看记录</a></td>
+                            <td><a class="duihuan" nickname="{{$vo -> nickname}}" point = "{{$vo -> point}}" openid = "{{ $vo -> openid }}" >兑换</a> <a href="{{ url('admin/userlog').'/'.$vo -> id }}">查看记录</a><a class="chongzhi" data="{{ $vo -> openid }}">充值</a></td>
                         </tr>
                     @endforeach
                 @endunless
@@ -82,7 +82,7 @@
             </table>
         </div>
     </div>
-    <!-- 充值 -->
+    <!-- 兑换 -->
     <div class="modal fade " id="duihuan_box" tabindex="-1" role="dialog"  >
         <div class="modal-dialog" role="document" style="width:900px;">
             <form action="{{ url('admin/duihuan') }}" method="post" autocomplete="off" draggable="false" id="myForm">
@@ -99,7 +99,7 @@
                             <tbody>
                             <input type="hidden" name="openid" id="openid" />
                             <tr>
-                                <td wdith="10%">微信名:</td>
+                                <td wdith="10%">手机号码:</td>
                                 <td width="90%">
                                     <input type="text" value="" class="form-control" disabled id="nickname"/>
                                 </td>
@@ -128,10 +128,58 @@
         </div>
     </div>
 
+    <!-- 充值 -->
+    <div class="modal fade " id="chongzhi_box" tabindex="-1" role="dialog"  >
+        <div class="modal-dialog" role="document" style="width:900px;">
+            <form action="{{ url('admin/chongzhi') }}" method="post" autocomplete="off" draggable="false" id="myForm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" >充值</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table" style="margin-bottom:0px;">
+                            <thead>
+                            <tr> </tr>
+                            </thead>
+                            <tbody>
+                            <input type="hidden" name="chongzhi_openid" id="chongzhi_openidhide" />
+                            <tr>
+                                <td wdith="10%">手机号码:</td>
+                                <td width="90%">
+                                    <input type="text" value="" class="form-control" disabled id="chongzhi_openid" name="chongzhi_openid"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td wdith="10%">充值点数:</td>
+                                <td width="90%">
+                                    <input type="number" value="" name="chongzhi_point" id="chongzhi_point" class="form-control" maxlength=""  required/>
+                                </td>
+                            </tr>
+
+                            {{ csrf_field() }}
+                            </tbody>
+                            <tfoot>
+                            <tr></tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">确认</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 
     <script>
-
+        @if(session('chongzhi'))
+            alert('{{ session('chongzhi') }},充值成功');
+        @endif
         $('.duihuan').click(function(){
             $('#duihuan_point').val($(this).attr('point'));
             $('#nickname').val($(this).attr('nickname'));
@@ -140,6 +188,13 @@
             $('#duihuan_point').attr('max',$(this).attr('point'));
             $('#duihuan_box').modal('show');
         })
+
+        $('.chongzhi').click(function(){
+            $('#chongzhi_openid').val($(this).attr('data'));
+            $('#chongzhi_openidhide').val($(this).attr('data'));
+            $('#chongzhi_box').modal('show');
+        })
+
     </script>
     <script>
         $(function(){

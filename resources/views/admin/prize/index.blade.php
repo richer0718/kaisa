@@ -23,7 +23,6 @@
                     <th><span class="glyphicon glyphicon-camera"></span> <span class="visible-lg">发放点数</span></th>
 
                     <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">创建时间</span></th>
-                    <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">投注点数</span></th>
 
                 </tr>
                 </thead>
@@ -38,7 +37,6 @@
                             <td>@if($vo -> shouru){{ $vo -> shouru -> point_buy }}@else 0 @endif</td>
                             <td>@if($vo -> shouru){{ $vo -> shouru -> point_cut }}@else 0 @endif</td>
                             <td>{{ date('Y-m-d H:i:s',$vo -> created_at) }}</td>
-                            <td>{{ $vo -> point }}</td>
                         </tr>
                     @endforeach
                 @endunless
