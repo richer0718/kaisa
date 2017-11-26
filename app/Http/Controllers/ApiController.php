@@ -409,7 +409,7 @@ class ApiController extends Controller
 
     //计算投注结果
     //返回三位数字
-    public function jisuan($open_number_id = 16007){
+    public function jisuan($open_number_id = 22861){
         //echo 11;exit;
         //去touzhu表中查，这期的投注
         $result = DB::table('touzhu') -> where(function($query) use($open_number_id){
@@ -433,7 +433,8 @@ class ApiController extends Controller
             8=>0,
             9=>0,
         ];
-        if($result){
+        if(count($result)){
+            //每个选项 加点
             //dump($result);
             foreach($result as $vo){
                 //dump($vo);
@@ -457,7 +458,8 @@ class ApiController extends Controller
         //echo 'end';exit;
 
 
-        if($result){
+        if(count($result)){
+            //比较每个选项的点数
             $number_zero = [];
             //先看有没有0的 有 就开0
             foreach($numbers as $key => $value){
@@ -479,12 +481,12 @@ class ApiController extends Controller
                 //$money = $numbers[$end_number];
             }
 
-            //var_dump($end_number);
-        }else{
-            //如果没有 就随便开一个
-            $end_number = rand(0,9);
+            //var_dump($end_number);exit;
         }
 
+        //var_dump($result);exit;
+
+        //var_dump($end_number);exit;
         //从上边可以得出 数组场 精确场 开哪个数字发出的点数最少 $end_number
         //然后开始比较大小场 得到十位数字
         if($result){
@@ -512,37 +514,86 @@ class ApiController extends Controller
             $res3 = intval($result3) * $options[3]['peilv']; //合
 
 
+            if(count($result)){
+                //如果前边的数字已经决定了
+                if($end_number >= 5){
+                    //大数字
+                    if($res1 > $res3){
+                        //大比合多 开合
+                        $number_pre =  $end_number;
+                    }else{
+                        //除了end_number 都行
+                        unset($numbers[$end_number]);
+                        $number_pre = array_rand($numbers,1);
 
-
-            if($end_number >= 5){
-                //大数字
-                if($res1 > $res3){
-                    //大比合多 开合
-                    $number_pre =  $end_number;
+                    }
                 }else{
-                    //除了end_number 都行
-                    unset($numbers[$end_number]);
-                    $number_pre = array_rand($numbers,1);
+                    //小数字
+                    if($res2 > $res3){
+                        //小比合多 开合
+                        $number_pre =  $end_number;
+                    }else{
+                        //除了end_number 都行
+                        unset($numbers[$end_number]);
+                        $number_pre = array_rand($numbers,1);
 
+                    }
                 }
             }else{
-                //小数字
-                if($res2 > $res3){
-                    //小比合多 开合
-                    $number_pre =  $end_number;
-                }else{
-                    //除了end_number 都行
-                    unset($numbers[$end_number]);
-                    $number_pre = array_rand($numbers,1);
+                //只有买大小 没有买其他的
+                if($res1 || $res2 || $res3){
+                    //前边的数字没有决定
+                    //只比较大小合
+                    //找出三个数中最小的
+                    $min_num = 0;
+                    $option_temp = 1; //开什么
+                    if($res1 > $res2){
+                        $min_num = $res2;
+                        $option_temp = 2;
+                    }else{
+                        $min_num = $res1;
+                        $option_temp = 1;
+                    }
 
+                    if($min_num > $res3){
+                        $min_num = $res3;
+                        $option_temp = 3;
+                    }
+
+                    if($option_temp == 1){
+                        //开大
+                        $end_number = rand(5,9);
+                        unset($numbers[$end_number]);
+                        $number_pre = array_rand($numbers,1);
+                    }
+
+                    if($option_temp == 2){
+                        //开小
+                        $end_number = rand(0,4);
+                        unset($numbers[$end_number]);
+                        $number_pre = array_rand($numbers,1);
+                    }
+
+                    if($option_temp == 3){
+                        //开合
+                        $end_number = rand(0,9);
+                        $number_pre = $end_number;
+
+                    }
+                }else{
+                    //都没买的 随便开
+                    $end_number = rand(0,9);
+                    $number_pre = rand(0,9);
                 }
+
+
+
+
             }
 
 
 
-        }else{
-            //没有人买 就随便开
-            $number_pre = rand(0,9);
+
         }
 
 
@@ -550,7 +601,7 @@ class ApiController extends Controller
 
 
         $return_num = $number_pre.$end_number;
-        //var_dump($return_num);
+        //var_dump($return_num);exit;
         return $return_num;
     }
 
