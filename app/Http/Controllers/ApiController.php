@@ -1189,7 +1189,7 @@ class ApiController extends Controller
         $openid = $request -> input('openid');
         $uid = $request -> input('uid');
         $point = intval($request -> input('point'));
-
+        exit;
         if($openid && $uid && $point){
             //查下这人 有没有这么多
             $userinfo = DB::table('user') -> where([
@@ -1218,6 +1218,14 @@ class ApiController extends Controller
                     ]) -> update([
                         'point' => $isset -> point + $point
                     ]);
+
+                    //转账记录
+                    DB::table('zhuanzhang') -> insert([
+                        'openid_a' => $openid,
+                        'openid_b' => $uid,
+                        'created_at' => time()
+                    ]);
+
                     return response() -> json(['status'=>'success','point'=>$userinfo -> point - $point]);
 
 
