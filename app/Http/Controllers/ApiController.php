@@ -1227,7 +1227,8 @@ class ApiController extends Controller
                     DB::table('zhuanzhang') -> insert([
                         'openid_a' => $openid,
                         'openid_b' => $uid,
-                        'created_at' => time()
+                        'created_at' => time(),
+                        'point' => $point
                     ]);
 
                     return response() -> json(['status'=>'success','point'=>$userinfo -> point - $point]);
