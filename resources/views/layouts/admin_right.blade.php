@@ -3,16 +3,16 @@
     <div class="row placeholders">
         <div class="col-xs-6 col-sm-3 placeholder">
             <h4>用户</h4>
-            <span class="text-muted">190 人</span> </div>
+            <span class="text-muted">{{ $data['user'] }} 人</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
             <h4>最新期数</h4>
-            <span class="text-muted">20171009008 期</span> </div>
+            <span class="text-muted">{{ $data['qishu'] }} 期</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
-            <h4>今日下注</h4>
-            <span class="text-muted">8976 点</span> </div>
+            <h4>总下注</h4>
+            <span class="text-muted">{{ $data['xiazhu'] }} 点</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
             <h4>充值</h4>
-            <span class="text-muted">90000 元</span> </div>
+            <span class="text-muted">{{ $data['chongzhi'] }} 元</span> </div>
     </div>
     <!--
     <h1 class="page-header">状态</h1>

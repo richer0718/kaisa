@@ -44,7 +44,17 @@ class IndexController extends Controller
 
     public function index(Request $request){
         //总人数
+        $data['user'] = DB::table('user') -> count();
+        //最新期数
+        $data['qishu'] = DB::table('openprize') -> orderBy('id','desc') -> first() -> prize_number;
+        //总充值
+        $data['chongzhi'] = DB::table('buylog') -> sum('point');
+        //总下注
+        $data['xiazhu'] = DB::table('touzhu') -> sum('point');
+        //dd($data);
         //dd(session('username'));
-        return view('admin/index');
+        return view('admin/index') -> with([
+            'data' => $data
+        ]);
     }
 }
