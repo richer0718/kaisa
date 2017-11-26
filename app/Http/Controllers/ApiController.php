@@ -1189,7 +1189,7 @@ class ApiController extends Controller
         $openid = $request -> input('openid');
         $uid = $request -> input('uid');
         $point = intval($request -> input('point'));
-        exit;
+        //exit;
         if($openid && $uid && $point){
             //查下这人 有没有这么多
             $userinfo = DB::table('user') -> where([
@@ -1203,6 +1203,10 @@ class ApiController extends Controller
                 $isset = DB::table('user') -> where([
                     'uid' => $uid
                 ]) -> first();
+                //如果存在 uid  并且 不是同一个人
+                if($isset -> id == $userinfo -> id){
+                    return response() -> json(['user'=>'error']);
+                }
                 if($isset){
                     // 开始转
                     //先扣
