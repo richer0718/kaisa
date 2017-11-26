@@ -43,6 +43,7 @@ class IndexController extends Controller
     }
 
     public function index(Request $request){
+        //总人数
         //dd(session('username'));
         return view('admin/index');
     }
