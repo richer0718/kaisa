@@ -54,7 +54,7 @@
         <li @if(Route::currentRouteName() == 'index' )class="active" @endif ><a href="{{ url('admin/index') }}"   >总览</a></li>
         <li @if(Route::currentRouteName() == 'user' )class="active" @endif ><a href="{{ url('admin/user') }}"   >用户列表</a></li>
         <li @if(Route::currentRouteName() == 'prize' )class="active" @endif ><a href="{{ url('admin/prize') }}"   >开奖查询</a></li>
-
+        <li @if(Route::currentRouteName() == 'dangwei' )class="active" @endif ><a href="{{ url('admin/dangwei') }}"   >档位控制</a></li>
         <!--<li @if(Route::currentRouteName() == 'daili' )class="active" @endif ><a class="dropdown-toggle-d" id="number"   >代理管理</a>
             <ul class="dropdown-menu-new @if(Route::currentRouteName() == 'daili' ) show @endif "  >
                 <li><a href="{{url('admin/daili')}}">基本信息</a></li>

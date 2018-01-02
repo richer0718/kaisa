@@ -33,4 +33,19 @@ class PrizeController extends Controller
             'res' => $res
         ]);
     }
+
+    public function dangwei(Request $request){
+        if($request -> input('dangwei')){
+            DB::table('dangwei') -> where([
+                'id' => 1
+            ]) -> update([
+                'number' => $request -> input('dangwei')
+            ]);
+        }
+
+        $dangwei = DB::table('dangwei') -> first();
+        return view('admin/prize/dangwei') -> with([
+            'dangwei' => $dangwei -> number
+        ]);
+    }
 }
